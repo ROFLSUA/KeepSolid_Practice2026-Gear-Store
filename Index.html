@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEAR Store</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:linear-gradient(180deg,#050505,#0b0b0b,#121212);
+  color:#d4af37;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  padding:18px 24px;
+  background:linear-gradient(180deg,#000,#111);
+  border-bottom:1px solid #2a2a2a;
+  box-shadow: 0 6px 20px rgba(0,0,0,.6);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:4px;
+  color:#ffd700;
+  line-height:1;
+}
+
+.logo-icon{
+  width:34px;
+  height:34px;
+  object-fit:contain;
+  display:block;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.6));
+}
+
+.nav a{
+  margin-right:18px;
+  font-size:18px;
+  letter-spacing:1px;
+  text-decoration:none;
+  color:#bfa44a;
+}
+.nav a:hover{color:#ffd700}
+
+.search{
+  margin-left:auto;
+  display:flex;
+  width:520px;
+  max-width:90vw;
+  position:relative;
+}
+
+.search input{
+  background:linear-gradient(180deg,#0c0c0c,#151515);
+  border:1px solid #2a2a2a;
+  padding:12px 16px;
+  color:#ffd700;
+  font-size:15px;
+  flex:1;
+}
+
+.search input::placeholder{
+  color:#8f8f8f;
+}
+
+.search input:focus{
+  outline:none;
+  border-color:#ffd700;
+  box-shadow:0 0 0 1px rgba(255,215,0,.25);
+}
+
+.search button{
+  background:linear-gradient(180deg,#ffd700,#e6b800);
+  border:none;
+  padding:12px 18px;
+  color:#000;
+  cursor:pointer;
+  font-size:16px;
+}
+
+.search button:hover{
+  background:#ffd700;
+}
+
+.container{
+  max-width:1400px;
+  margin:0 auto;
+  padding:24px;
+}
+
+.section-title{
+  font-size:18px;
+  margin:28px 0 14px;
+  letter-spacing:2px;
+  color:#ffd700;
+}
+
+.featured{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:16px;
+}
+
+.featured-main{
+  position:relative;
+  height:360px;
+  background:linear-gradient(145deg,#000,#1a1a1a);
+  border:1px solid #2a2a2a;
+}
+
+.featured-main span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  color:#555;
+  letter-spacing:2px;
+}
+
+.featured-overlay{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:16px;
+  background:linear-gradient(transparent,#000);
+}
+
+.featured-overlay h2{color:#ffd700}
+.featured-side{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+
+.side-card{
+  background:#0e0e0e;
+  border:1px solid #2a2a2a;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#555;
+}
+
+.slider-wrapper{position:relative}
+.slider{
+  display:flex;
+  gap:14px;
+  overflow:hidden;
+  scroll-behavior:smooth;
+  overscroll-behavior-x: contain;
+}
+
+.slider-btn{
+  position:absolute;
+  top:40%;
+  background:rgba(0,0,0,.85);
+  border:1px solid #3a3a3a;
+  color:#ffd700;
+  font-size:26px;
+  padding:10px 14px;
+  cursor:pointer;
+  z-index:10;
+}
+.slider-btn.left{left:-22px}
+.slider-btn.right{right:-22px}
+.slider-btn:hover{background:#ffd700;color:#000}
+
+.deal-card,
+.game-card{
+  min-width:220px;
+  background:linear-gradient(160deg,#0c0c0c,#161616);
+  border:1px solid #2a2a2a;
+  flex-shrink:0;
+  transition:.25s;
+  cursor:pointer;
+}
+
+.deal-card:hover,
+.game-card:hover{
+  border-color:#ffd700;
+  transform:translateY(-4px);
+}
+
+.game-card:hover::after,
+.deal-card:hover::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    180deg,
+    rgba(255,215,0,.06),
+    transparent 60%
+  );
+  pointer-events:none;
+}
+
+.deal-img,
+.game-img{
+  height:140px;
+  background-color:#000;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  border-bottom:1px solid #2a2a2a;
+}
+
+.game-title{
+  padding:8px;
+  font-size:13px;
+  color:#d4af37;
+}
+
+.game-price{
+  padding:0 8px 10px;
+  color:#ffd700;
+}
+
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:16px;
+}
+
+.category{
+  height:160px;
+  background:linear-gradient(145deg,#0b0b0b,#1a1a1a);
+  border:1px solid #2a2a2a;
+  position:relative;
+}
+
+.category span{
+  position:absolute;
+  bottom:16px;
+  left:16px;
+  background:#ffd700;
+  color:#000;
+  padding:6px 14px;
+  font-weight:700;
+  letter-spacing:1px;
+  text-shadow: 0 2px 8px rgba(0,0,0,.9);
+}
+
+.footer{
+  background:#000;
+  color:#777;
+  padding:24px;
+  text-align:center;
+  font-size:12px;
+  border-top:1px solid #2a2a2a;
+}
+
+.queue-section{margin-top:28px;}
+
+.queue-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:10px;
+}
+
+.queue-more{
+  background:linear-gradient(180deg,#0f0f0f,#0a0a0a);
+  border:1px solid #3a3a3a;
+  color:#ffd700;
+  padding:6px 14px;
+  font-weight:800;
+  font-size:12px;
+  border-radius:2px;
+  cursor:pointer;
+  letter-spacing:1px;
+}
+
+.queue-more:hover{
+  border-color:#ffd700;
+  box-shadow:0 0 0 2px rgba(255,215,0,.08) inset;
+}
+
+.queue-wrap{
+  position:relative;
+  background:linear-gradient(180deg,#0a0a0a,#111,#0a0a0a);
+  border:1px solid #2a2a2a;
+  padding:16px 18px;
+  overflow:hidden;
+  cursor:pointer;
+}
+
+.queue-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-40px;
+  background:
+    radial-gradient(600px 180px at 20% 20%, rgba(255,215,0,.10), transparent 60%),
+    radial-gradient(600px 180px at 80% 60%, rgba(255,215,0,.06), transparent 55%);
+  pointer-events:none;
+}
+
+.queue-slider{
+  position:relative;
+  z-index:2;
+  display:flex;
+  gap:14px;
+  overflow:hidden;
+  scroll-behavior:smooth;
+  padding:6px 0;
+}
+
+.queue-card{
+  width:320px;
+  min-width:320px;
+  height:150px;
+  border:1px solid rgba(255,215,0,.12);
+  background:#000;
+  flex-shrink:0;
+  position:relative;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.queue-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg, rgba(0,0,0,.75), rgba(0,0,0,.25) 55%, rgba(0,0,0,.10));
+}
+
+.queue-card:hover{
+  border-color:rgba(255,215,0,.45);
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(0,0,0,.45);
+}
+
+.queue-img{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  filter:saturate(1.05) contrast(1.05);
+}
+
+.queue-title{
+  position:absolute;
+  left:12px;
+  bottom:10px;
+  z-index:3;
+  color:#ffd700;
+  font-weight:900;
+  text-shadow:0 2px 12px rgba(0,0,0,.85);
+  letter-spacing:.6px;
+  font-size:14px;
+}
+
+.queue-hint{
+  position:absolute;
+  left:140px;
+  right:140px;
+  top:58px;
+  z-index:5;
+  background:linear-gradient(180deg,#ffd700,#e6b800);
+  color:#0a0a0a;
+  font-weight:900;
+  padding:14px 18px;
+  border-radius:2px;
+  cursor:pointer;
+  box-shadow:0 12px 26px rgba(0,0,0,.55);
+}
+
+.queue-hint::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:-32px;
+  width:0;height:0;
+  border-top:26px solid transparent;
+  border-bottom:26px solid transparent;
+  border-left:32px solid #e6b800;
+}
+
+.queue-card:hover .queue-title{
+  color:#ffe066;
+}
+
+.featured-main{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  cursor:pointer;
+  overflow:hidden;
+  transition: transform .4s ease;
+}
+
+.featured-main:hover{
+  transform: scale(1.015);
+}
+
+.featured-card:hover{
+  border-color:#ffd700;
+  transform:translateY(-2px);
+  transition:.2s;
+}
+
+.featured-overlay{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  padding:16px;
+  background:linear-gradient(transparent,#000);
+}
+
+.featured-title{
+  margin:0;
+  font-size:22px;
+  letter-spacing:1px;
+  color:#ffd700;
+}
+.featured-sub{
+  color:#bfa44a;
+  font-size:12px;
+  letter-spacing:1px;
+}
+
+.side-featured{
+  position:relative;
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  cursor:pointer;
+  overflow:hidden;
+}
+.side-featured::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,.1), rgba(0,0,0,.85));
+}
+.side-title{
+  position:absolute;
+  left:10px;
+  bottom:10px;
+  z-index:2;
+  color:#ffd700;
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:.6px;
+  text-shadow:0 2px 10px rgba(0,0,0,.8);
+}
+
+.category{
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+.category::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    180deg,
+    rgba(0,0,0,.25),
+    rgba(0,0,0,.85)
+  );
+}
+
+.category span{
+  z-index:2;
+}
+
+.category:hover{
+  border-color:#ffd700;
+  transform:translateY(-3px);
+  transition:.25s;
+}
+
+@media(max-width:900px){
+  .featured{grid-template-columns:1fr}
+  .slider-btn{display:none}
+  .queue-hint{display:none}
+}
+
+:root{
+  --pad: 24px;
+  --gap: 16px;
+  --cardW: 220px;
+  --cardImgH: 140px;
+}
+
+html, body{
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+img, video, canvas, svg{
+  max-width:100%;
+}
+
+.slider, .nav{
+  -webkit-overflow-scrolling: touch;
+}
+
+.categories.slider{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-behavior:smooth;
+  padding-bottom:8px;
+}
+
+.categories.slider::-webkit-scrollbar{
+  height:6px;
+}
+.categories.slider::-webkit-scrollbar-thumb{
+  background:#2a2a2a;
+  border-radius:6px;
+}
+
+.categories.slider .category{
+  min-width:260px;
+  flex-shrink:0;
+}
+
+.discount-badge{
+  position:absolute;
+  top:8px;
+  left:8px;
+  background:#4caf50;
+  color:#000;
+  font-weight:900;
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:2px;
+  z-index:5;
+}
+
+.old-price{
+  text-decoration:line-through;
+  color:#888;
+  font-size:12px;
+  margin-right:6px;
+}
+
+.new-price{
+  color:#ffd700;
+  font-weight:800;
+}
+
+@media (max-width: 768px){
+  .categories.slider{
+    scroll-snap-type:x mandatory;
+  }
+  .categories.slider .category{
+    scroll-snap-align:start;
+  }
+}
+
+
+@media (max-width: 1024px){
+  :root{
+    --pad: 18px;
+    --gap: 14px;
+    --cardW: 210px;
+    --cardImgH: 130px;
+  }
+
+  .container{ padding: var(--pad); }
+
+  .header{
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px var(--pad);
+  }
+
+  .nav{
+    flex: 1 1 auto;
+    display:flex;
+    gap: 14px;
+    align-items:center;
+    overflow-x:auto;
+    white-space:nowrap;
+    padding-bottom: 4px;
+  }
+  .nav a{ margin-right: 0; font-size: 16px; }
+
+  .search{
+    margin-left: 0;
+    flex: 1 1 320px;
+    min-width: 260px;
+  }
+  .search input{
+    flex:1;
+    min-width: 0;
+  }
+
+  .featured{ gap: var(--gap); }
+  .featured-main{ height: 320px; }
+  .featured-side{ gap: 10px; }
+
+  .deal-card, .game-card{ min-width: var(--cardW); }
+  .deal-img, .game-img{ height: var(--cardImgH); }
+
+  .slider{
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
+  .deal-card, .game-card{ scroll-snap-align: start; }
+
+  .slider-btn{ display:none; }
+
+  .categories{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px){
+  :root{
+    --pad: 14px;
+    --gap: 12px;
+    --cardW: 180px;
+    --cardImgH: 110px;
+  }
+
+  .container{ padding: var(--pad); }
+
+  .header{
+    padding: 12px var(--pad);
+    gap: 10px;
+  }
+
+  .logo{
+    font-size: 20px;
+    letter-spacing: 3px;
+  }
+  .logo-icon{ width: 30px; height: 30px; }
+
+  .nav{
+    width: 100%;
+    overflow-x:auto;
+    white-space:nowrap;
+    padding-bottom: 6px;
+    border-top: 1px solid #1e1e1e;
+    padding-top: 10px;
+  }
+  .nav a{ font-size: 15px; }
+
+  .search{
+    width:100%;
+    margin-left:0;
+    display:flex;
+    gap: 8px;
+  }
+  .search input{
+    width: 100%;
+    flex:1;
+    min-width:0;
+    padding: 10px;
+    font-size: 14px;
+  }
+  .search button{
+    padding: 10px 14px;
+  }
+
+  .featured{
+    grid-template-columns: 1fr;
+    gap: var(--gap);
+  }
+  .featured-main{
+    height: 240px;
+  }
+  .featured-side{
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .side-card{
+    min-height: 110px;
+  }
+
+  .slider{
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+  }
+  .deal-card, .game-card{
+    min-width: var(--cardW);
+    scroll-snap-align: start;
+  }
+  .deal-img, .game-img{ height: var(--cardImgH); }
+
+  .game-title{ font-size: 12px; }
+  .game-price{ font-size: 13px; }
+
+  .categories{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .category{ height: 130px; }
+
+  .queue-wrap{ padding: 14px; }
+  .queue-slider{
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type: x mandatory;
+  }
+  .queue-card{
+    width: 270px;
+    min-width: 270px;
+    height: 130px;
+    scroll-snap-align: start;
+  }
+
+  .queue-hint{ display:none; }
+}
+
+@media (max-width: 420px){
+  :root{
+    --pad: 12px;
+    --cardW: 165px;
+    --cardImgH: 100px;
+  }
+
+  .logo{ font-size: 18px; letter-spacing: 2px; }
+
+  .featured-main{ height: 220px; }
+
+  .deal-card, .game-card{ min-width: var(--cardW); }
+  .deal-img, .game-img{ height: var(--cardImgH); }
+}
+
+@supports (padding: max(0px)){
+  @media (max-width: 768px){
+    .header{
+      padding-left: max(var(--pad), env(safe-area-inset-left));
+      padding-right: max(var(--pad), env(safe-area-inset-right));
+    }
+    .container{
+      padding-left: max(var(--pad), env(safe-area-inset-left));
+      padding-right: max(var(--pad), env(safe-area-inset-right));
+    }
+  }
+}
+@media (max-width: 768px){
+  .queue-slider{
+    overflow-x:auto;
+    overflow-y:hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px;
+  }
+  .queue-card{
+    scroll-snap-align: start;
+  }
+}
+
+.search-results{
+  position:absolute;
+  top:54px;
+  left:0;
+  width:100%;
+
+  background:linear-gradient(180deg,#141414,#0d0d0d);
+  border:1px solid #2a2a2a;
+  box-shadow:0 12px 30px rgba(0,0,0,.6);
+  z-index:1000;
+  display:none;
+
+  max-height:300px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  animation: fadeIn .15s ease-out;
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(-4px);}
+  to{opacity:1; transform:none;}
+}
+
+.search-item{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:14px 16px;
+  cursor:pointer;
+  border-bottom:1px solid #2a2a2a;
+  transition:.2s;
+}
+
+.search-item:hover{
+  background:linear-gradient(
+    90deg,
+    rgba(255,215,0,.08),
+    rgba(255,215,0,.02)
+  );
+}
+
+.search-img{
+  width:180px;
+  height:68px;
+  background-size:cover;
+  background-position:center;
+  flex-shrink:0;
+  border-radius:2px;
+}
+
+.search-info{
+  flex:1;
+}
+
+.search-title{
+  color:#ffd700;
+  font-size:15px;
+  font-weight:700;
+  line-height:1.3;
+}
+
+.search-price{
+  font-size:14px;
+  color:#d4af37;
+  margin-top:6px;
+}
+
+.search-price span:not(.search-discount){
+  color:#ffd700;
+  font-weight:900;
+}
+
+.search-discount{
+  background:#3fae49;
+  color:#000;
+  padding:2px 6px;
+  border-radius:2px;
+  font-weight:900;
+  font-size:12px;
+  margin-right:6px;
+}
+
+.search-item:hover{
+  background:linear-gradient(90deg,#2a303c,#1f2430);
+}
+
+*{
+  scrollbar-width: thin;
+  scrollbar-color: #ffd700 #0b0b0b;
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track{
+  background: linear-gradient(180deg,#070707,#0b0b0b);
+  border-left: 1px solid #1f1f1f;
+}
+
+::-webkit-scrollbar-thumb{
+  background: linear-gradient(180deg,#ffd700,#d4af37);
+  border-radius: 6px;
+  border: 2px solid #0b0b0b;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(180deg,#ffe066,#ffd700);
+}
+
+::-webkit-scrollbar-corner{
+  background:#0b0b0b;
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">
+  <img class="logo-icon" src="gear.png" alt="GEAR logo">
+  <span>GEAR</span></div>
+  <nav class="nav">
+    <a href="Index.html">Магазин</a>
+    <a href="library.html">Бібліотека</a>
+  </nav>
+  <div class="search" style="position:relative;">
+  <input id="search-input" placeholder="Пошук у магазині" autocomplete="off">
+  <button>🔍</button>
+
+  <div id="search-results" class="search-results"></div>
+</div>
+</header>
+
+<main class="container">
+
+<section class="featured" id="featured-block">
+  <div class="featured-main featured-card" id="featured-main"></div>
+
+  <div class="featured-side" id="featured-side">
+    <div class="side-card side-featured featured-card"></div>
+    <div class="side-card side-featured featured-card"></div>
+    <div class="side-card side-featured featured-card"></div>
+    <div class="side-card side-featured featured-card"></div>
+  </div>
+</section>
+
+<!-- АКЦІЇ -->
+<section>
+  <h2 class="section-title">АКЦІЇ</h2>
+  <div class="slider-wrapper">
+    <button class="slider-btn left" data-slider="deals">❮</button>
+
+<div class="slider" id="deals-slider">
+
+  <div class="deal-card" data-id="Frostpunk" onclick="goStoreGame('Frostpunk')">
+    <div class="deal-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601580/header.jpg?t=1766132479');"></div>
+    <div class="game-title">Frostpunk 2</div>
+    <div class="game-price">840₴</div>
+  </div>
+
+  <div class="deal-card" data-id="stalker2" onclick="goStoreGame('stalker2')">
+    <div class="deal-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1643320/b93ee8a774c27128d77357a879e7ed4b5bb072a3/capsule_616x353.jpg?t=1765979308');"></div>
+    <div class="game-title">S.T.A.L.K.E.R. 2: Heart of Chornobyl</div>
+    <div class="game-price">1400₴</div>
+  </div>
+
+  <div class="deal-card" data-id="batman" onclick="goStoreGame('batman')">
+    <div class="deal-img" style="background-image:url('https://gaming-cdn.com/images/products/2419/orig/batman-arkham-knight-pc-game-steam-cover.jpg?v=1703252478');"></div>
+    <div class="game-title">Batman™: Arkham Knight</div>
+    <div class="game-price">279₴</div>
+  </div>
+
+  <div class="deal-card" data-id="ARCRaiders" onclick="goStoreGame('ARCRaiders')">
+    <div class="deal-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/b26e2a315d32ef462a07cf0e36eb06a2b810d0c9/header_alt_assets_0.jpg?t=1768418746');"></div>
+    <div class="game-title">ARC Raiders</div>
+    <div class="game-price">1160₴</div>
+  </div>
+
+  <div class="deal-card" data-id="expedition33" onclick="goStoreGame('expedition33')">
+    <div class="deal-img" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/be3305b02d4db0dffa3458537118423bf2792d7e/header.jpg?t=1766050625');"></div>
+    <div class="game-title">Clair Obscur: Expedition 33</div>
+    <div class="game-price">1500₴</div>
+  </div>
+
+  <div class="deal-card" data-id="witcher" onclick="goStoreGame('witcher')">
+    <div class="deal-img" style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGsSebN6FMqkqYOmJch68Xu-VP4KbfXvC-Iw&s');"></div>
+    <div class="game-title">The Witcher 3: Wild Hunt</div>
+    <div class="game-price">950₴</div>
+  </div>
+
+  <div class="deal-card" data-id="balatro" onclick="goStoreGame('balatro')">
+    <div class="deal-img" style="background-image:url('https://media.forgecdn.net/game-box-art/89089_845c4909-c468-4dc2-b0ed-d9851795fb6c.png');"></div>
+    <div class="game-title">Balatro</div>
+    <div class="game-price">325₴</div>
+  </div>
+
+  <div class="deal-card" data-id="SlaytheSpire" onclick="goStoreGame('SlaytheSpire')">
+    <div class="deal-img" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/header.jpg?t=1764833720');"></div>
+    <div class="game-title">Slay the Spire</div>
+    <div class="game-price">500₴</div>
+  </div>
+
+  <div class="deal-card" data-id="METALGEARSOLIDΔ" onclick="goStoreGame('METALGEARSOLIDΔ')">
+    <div class="deal-img" style="background-image:url('https://external-preview.redd.it/metal-gear-solid-delta-snake-eater-marks-strong-debut-with-v0-OqhPRHZfKG7H7ov9SaFsCPcdsxGIz8Y9hos5nKvp8po.jpeg?width=640&crop=smart&auto=webp&s=a3a05a62b617f2a7fd656d43d73fef224a051818');"></div>
+    <div class="game-title">METAL GEAR SOLID Δ: SNAKE EATER</div>
+    <div class="game-price">1475₴</div>
+  </div>
+
+  <div class="deal-card" data-id="HELLDIVERS" onclick="goStoreGame('HELLDIVERS')">
+    <div class="deal-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/14293cf6c4eeb6959b9333ecd42fcc021a8fc1e3/header.jpg?t=1767634300');"></div>
+    <div class="game-title">HELLDIVERS 2</div>
+    <div class="game-price">1200₴</div>
+  </div>
+
+  <div class="deal-card" data-id="Jackbox" onclick="goStoreGame('Jackbox')">
+    <div class="deal-img" style="background-image:url('https://dezdoes.com/wp-content/uploads/2025/09/1920x1080-2.png');"></div>
+    <div class="game-title">The Jackbox Party Pack 11</div>
+    <div class="game-price">600₴</div>
+  </div>
+
+  <div class="deal-card" data-id="Cyberpunk" onclick="goStoreGame('Cyberpunk')">
+    <div class="deal-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/e9047d8ec47ae3d94bb8b464fb0fc9e9972b4ac7/header.jpg?t=1769417481');"></div>
+    <div class="game-title">Cyberpunk 2077</div>
+    <div class="game-price">1400₴</div>
+  </div>
+
+  <div class="deal-card" data-id="StreetFighter" onclick="goStoreGame('StreetFighter')">
+    <div class="deal-img" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1364780/header.jpg?t=1769142441');"></div>
+    <div class="game-title">Street Fighter 6</div>
+    <div class="game-price">1200₴</div>
+  </div>
+
+  <div class="deal-card" data-id="UntilDawn" onclick="goStoreGame('UntilDawn')">
+    <div class="deal-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2172010/header.jpg?t=1750959555');"></div>
+    <div class="game-title">Until Dawn</div>
+    <div class="game-price">2000₴</div>
+  </div>
+
+  <div class="deal-card" data-id="TheQuarry" onclick="goStoreGame('TheQuarry')">
+    <div class="deal-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1577120/capsule_616x353.jpg?t=1730303267');"></div>
+    <div class="game-title">The Quarry</div>
+    <div class="game-price">1500₴</div>
+  </div>
+
+</div>
+
+    <button class="slider-btn right" data-slider="deals">❯</button>
+  </div>
+</section>
+
+<!-- КАТЕГОРІЇ -->
+<section>
+  <h2 class="section-title">КАТЕГОРІЇ</h2>
+
+  <div class="slider-wrapper">
+    <button class="slider-btn left" data-slider="categories">❮</button>
+
+    <div class="categories slider" id="categories-slider">
+
+      <a class="category"
+         href="category.html?genre=Пригоди"
+         style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/be3305b02d4db0dffa3458537118423bf2792d7e/header.jpg?t=1766050625');">
+        <span>ПРИГОДИ</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Бойовики"
+         style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/14293cf6c4eeb6959b9333ecd42fcc021a8fc1e3/header.jpg?t=1767634300');">
+        <span>БОЙОВИКИ</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Онлайн"
+         style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/64cb9deaae9055003fd76ba0f6df6b6fba38e808/header.jpg?t=1765508208');">
+        <span>ОНЛАЙН</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Рольові ігри"
+         style="background-image:url('https://assets.nintendo.com/image/upload/q_auto/f_auto/store/software/switch/70010000069466/031ec81a27d0f56878a150f28c7d53daa2f0f40080dd3923c7c791036cc55fe1');">
+        <span>РОЛЬОВІ ІГРИ</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Стратегії"
+         style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601580/header.jpg');">
+        <span>СТРАТЕГІЇ</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Виживання"
+         style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/header.jpg');">
+        <span>ВИЖИВАННЯ</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Хоррор"
+         style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2172010/header.jpg');">
+        <span>ХОРРОР</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Сюжет"
+         style="background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGsSebN6FMqkqYOmJch68Xu-VP4KbfXvC-Iw&s');">
+        <span>СЮЖЕТ</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Інді"
+         style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/header.jpg?t=1764833720');">
+        <span>ІНДІ</span>
+      </a>
+
+      <a class="category"
+         href="category.html?genre=Аркади"
+         style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/274190/header.jpg');">
+        <span>АРКАДИ</span>
+      </a>
+
+    </div>
+
+    <button class="slider-btn right" data-slider="categories">❯</button>
+  </div>
+</section>
+
+<!-- РЕКОМЕНДОВАНО -->
+<section>
+  <h2 class="section-title">РЕКОМЕНДОВАНО</h2>
+  <div class="slider-wrapper">
+    <button class="slider-btn left" data-slider="recommended">❮</button>
+<div class="slider" id="recommended-slider">
+
+  <div class="game-card" data-id="Hades" onclick="goStoreGame('Hades')">
+    <div class="game-img" style="background-image:url('https://www.memorypc.fr/media/8e/b3/69/1726134580/hades-2.png?ts=1726134580');"></div>
+    <div class="game-title">Hades II</div>
+    <div class="game-price">460₴</div>
+  </div>
+
+  <div class="game-card" data-id="Rimworld" onclick="goStoreGame('Rimworld')">
+    <div class="game-img" style="background-image:url('https://cdn1.epicgames.com/offer/7051eadbb8c2435caf32a9bc0dc17936/rimworldwide_2560x1440-410a62ec21d44260409182e1174cce2e');"></div>
+    <div class="game-title">RimWorld</div>
+    <div class="game-price">470₴</div>
+  </div>
+
+  <div class="game-card" data-id="Far" onclick="goStoreGame('Far')">
+    <div class="game-img" style="background-image:url('https://image.api.playstation.com/cdn/EP3037/CUSA12901_00/FA3iQhzAIGQZSMOJbKk5IGkBVIx5G55c.png');"></div>
+    <div class="game-title">FAR: Lone Sails</div>
+    <div class="game-price">230₴</div>
+  </div>
+
+  <div class="game-card" data-id="Teardown" onclick="goStoreGame('Teardown')">
+    <div class="game-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1167630/header.jpg?t=1763977691');"></div>
+    <div class="game-title">Teardown</div>
+    <div class="game-price">650₴</div>
+  </div>
+
+  <div class="game-card" data-id="Darktide" onclick="goStoreGame('Darktide')">
+    <div class="game-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1361210/f07ebcb73a34112ac61c54608b1f1ded7e45eb8a/header.jpg?t=1765362596');"></div>
+    <div class="game-title">Warhammer 40,000: Darktide</div>
+    <div class="game-price">760₴</div>
+  </div>
+
+  <div class="game-card" data-id="Cult" onclick="goStoreGame('Cult')">
+    <div class="game-img" style="background-image:url('https://upload.wikimedia.org/wikipedia/en/thumb/d/d4/Cult_of_the_Lamb_Key_Art.png/250px-Cult_of_the_Lamb_Key_Art.png');"></div>
+    <div class="game-title">Cult of the Lamb</div>
+    <div class="game-price">500₴</div>
+  </div>
+
+  <div class="game-card" data-id="Warframe" onclick="goStoreGame('Warframe')">
+    <div class="game-img" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/64cb9deaae9055003fd76ba0f6df6b6fba38e808/header.jpg?t=1765508208');"></div>
+    <div class="game-title">Warframe</div>
+    <div class="game-price">Безкоштовно</div>
+  </div>
+
+  <div class="game-card" data-id="Rust" onclick="goStoreGame('Rust')">
+    <div class="game-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/header.jpg?t=1761667247');">
+    </div><div class="game-title">Rust</div>
+    <div class="game-price">700₴</div>
+  </div>
+
+  <div class="game-card" data-id="RainbowSixSiegeX" onclick="goStoreGame('RainbowSixSiegeX')">
+    <div class="game-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/359550/dc3570350a99ecc4dd77f83fad47787f7eca89f7/header.jpg?t=1766176190');"></div>
+    <div class="game-title">Tom Clancy's Rainbow Six Siege X</div>
+    <div class="game-price">Безкоштовно</div>
+  </div>
+
+  <div class="game-card" data-id="DeadCells" onclick="goStoreGame('DeadCells')">
+    <div class="game-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/588650/header.jpg?t=1761123066');"></div>
+    <div class="game-title">Dead Cells</div>
+    <div class="game-price">330₴</div>
+  </div>
+
+<div class="game-card" data-id="wot" onclick="goStoreGame('wot')">
+    <div class="deal-img" style="background-image:url('https://gfn.am/en/games/media/images/wide_art_image-world-of-tanks-618565e2.original.jpg');"></div>
+    <div class="game-title">World of Tanks</div>
+    <div class="game-price">Безкоштовно</div>
+  </div>
+
+  <div class="game-card" data-id="Broforce" onclick="goStoreGame('Broforce')">
+    <div class="game-img" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/274190/header.jpg?t=1764247760');"></div>
+    <div class="game-title">Broforce</div>
+    <div class="game-price">325₴</div>
+  </div>
+
+  <div class="game-card" data-id="ReadyOrNot" onclick="goStoreGame('ReadyOrNot')">
+    <div class="game-img" style="background-image:url('https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1144200/header.jpg?t=1753984272');"></div>
+    <div class="game-title">Ready or Not</div>
+    <div class="game-price">625₴</div>
+  </div>
+
+  <div class="game-card" data-id="MonsterTrain2" onclick="goStoreGame('MonsterTrain2')">
+    <div class="game-img" style="background-image:url('https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2742830/dd05c7cdc22cd2bac76e8f38562a9736ec084c30/header_alt_assets_3.jpg?t=1770191399');">
+    </div><div class="game-title">Monster Train 2</div>
+    <div class="game-price">515₴</div>
+  </div>
+
+  <div class="game-card" data-id="DarkestDungeonII" onclick="goStoreGame('DarkestDungeonII')">
+    <div class="game-img" style="background-image:url('https://assets.nintendo.com/image/upload/q_auto/f_auto/store/software/switch/70010000069466/031ec81a27d0f56878a150f28c7d53daa2f0f40080dd3923c7c791036cc55fe1');"></div>
+    <div class="game-title">Darkest Dungeon II</div>
+    <div class="game-price">800₴</div>
+  </div>
+
+</div>
+
+    <button class="slider-btn right" data-slider="recommended">❯</button>
+  </div>
+</section>
+
+<!-- МОЯ ЧЕРГА ЗНАХІДОК -->
+<section class="queue-section">
+  <div class="queue-head">
+    <h2 class="section-title" style="margin:0;">МОЯ ЧЕРГА ЗНАХІДОК</h2>
+    <button class="queue-more" type="button" id="queue-more">ДОКЛАДНІШЕ</button>
+  </div>
+
+  <div class="queue-wrap" id="queue-wrap">
+    <div class="queue-hint" id="queue-hint">
+      <span>Клацніть тут, щоби перейти до своєї черги знахідок</span>
+    </div>
+
+    <div class="queue-slider slider" id="queue-slider"></div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">GEAR Store</footer>
+
+<script>
+function goStoreGame(id){
+  window.location.href = "game.html?id=" + encodeURIComponent(id);
+}
+
+
+document.querySelectorAll(".slider-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const slider = document.getElementById(btn.dataset.slider + "-slider");
+    if(!slider) return;
+
+    const step = Math.max(240, slider.getBoundingClientRect().width - 40);
+    slider.scrollLeft += btn.classList.contains("left") ? -step : step;
+  });
+});
+
+
+function bgUrlOf(el){
+  const bg = el?.style?.backgroundImage || "";
+  const m = /url\(["']?(.*?)["']?\)/.exec(bg);
+  return m ? m[1] : "";
+}
+function collectGamesFromPage(){
+  const games = [];
+  document.querySelectorAll("#deals-slider .deal-card").forEach((card)=>{
+    const title = card.querySelector(".game-title")?.textContent?.trim() || "GAME";
+    const img = bgUrlOf(card.querySelector(".deal-img"));
+    const id = card.dataset.id || "unknown";
+    games.push({title, img, href:`game.html?id=${encodeURIComponent(id)}`});
+  });
+  document.querySelectorAll("#recommended-slider .game-card").forEach((card)=>{
+    const title = card.querySelector(".game-title")?.textContent?.trim() || "GAME";
+    const img = bgUrlOf(card.querySelector(".game-img"));
+    const id = card.dataset.id || "unknown";
+    games.push({title, img, href:`game.html?id=${encodeURIComponent(id)}`});
+  });
+  const seen = new Set();
+  return games.filter(g => (seen.has(g.href) ? false : (seen.add(g.href), true)));
+}
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function collectGamesForFeatured(){
+  const games = [];
+
+  const cards = [
+    ...document.querySelectorAll("#deals-slider .deal-card"),
+    ...document.querySelectorAll("#recommended-slider .game-card")
+  ];
+
+  cards.forEach(card=>{
+    const id = card.dataset.id;
+    if(!id) return;
+
+    const title = card.querySelector(".game-title")?.textContent?.trim() || "GAME";
+
+    const imgEl = card.querySelector(".deal-img") || card.querySelector(".game-img");
+    const img = bgUrlOf(imgEl);
+
+    const price = card.querySelector(".game-price")?.textContent?.trim() || "";
+    if(!img) return;
+    if(title.toUpperCase() === "GAME") return;
+    if(price === "—") return;
+
+    games.push({ id, title, img });
+  });
+
+  const seen = new Set();
+  return games.filter(g => (seen.has(g.id) ? false : (seen.add(g.id), true)));
+}
+
+function renderFeatured(){
+  const pool = collectGamesForFeatured();
+  if(pool.length < 1) return;
+
+  const picked = shuffle(pool).slice(0, 5);
+
+  const big = picked[0];
+  const main = document.getElementById("featured-main");
+  main.style.backgroundImage = `url("${big.img}")`;
+  main.setAttribute("data-id", big.id);
+  main.onclick = ()=>goStoreGame(big.id);
+
+  main.innerHTML = `
+    <div class="featured-overlay">
+      <h2 class="featured-title">${big.title}</h2>
+      <small class="featured-sub">ВІДІБРАНЕ І РЕКОМЕНДОВАНЕ</small>
+    </div>
+  `;
+
+  const sideWrap = document.getElementById("featured-side");
+  const sideCards = sideWrap.querySelectorAll(".side-featured");
+
+  for(let i=0;i<sideCards.length;i++){
+    const el = sideCards[i];
+    const g = picked[i+1];
+
+    if(!g){
+      el.style.backgroundImage = "";
+      el.removeAttribute("data-id");
+      el.onclick = null;
+      el.innerHTML = "";
+      continue;
+    }
+
+    el.style.backgroundImage = `url("${g.img}")`;
+    el.setAttribute("data-id", g.id);
+    el.onclick = ()=>goStoreGame(g.id);
+    el.innerHTML = `<div class="side-title">${g.title}</div>`;
+  }
+}
+
+function renderQueue(list){
+  const slider = document.getElementById("queue-slider");
+  slider.innerHTML = "";
+  list.forEach(g=>{
+    const card = document.createElement("div");
+    card.className = "queue-card";
+    card.dataset.href = g.href;
+
+    const img = document.createElement("div");
+    img.className = "queue-img";
+    if(g.img) img.style.backgroundImage = `url("${g.img}")`;
+
+    const title = document.createElement("div");
+    title.className = "queue-title";
+    title.textContent = g.title;
+
+    card.appendChild(img);
+    card.appendChild(title);
+
+    card.addEventListener("click", (e)=>{
+  e.stopPropagation();
+  startQueueFrom(card.dataset.href);
+  });
+
+    slider.appendChild(card);
+  });
+}
+
+function startQueueAndGoFirst(){
+  const slider = document.getElementById("queue-slider");
+  const hrefs = Array.from(slider.querySelectorAll(".queue-card")).map(c=>c.dataset.href);
+  if(!hrefs.length) return;
+
+  localStorage.setItem("gear_queue", JSON.stringify(hrefs));
+  localStorage.setItem("gear_queue_pos", "0");
+  localStorage.setItem("gear_queue_active", "1");
+
+  window.location.href = hrefs[0];
+}
+function startQueueFrom(href){
+  const slider = document.getElementById("queue-slider");
+  const hrefs = Array.from(slider.querySelectorAll(".queue-card")).map(c=>c.dataset.href);
+  if(!hrefs.length) return;
+
+  const pos = Math.max(0, hrefs.indexOf(href));
+
+  localStorage.setItem("gear_queue", JSON.stringify(hrefs));
+  localStorage.setItem("gear_queue_pos", String(pos));
+  localStorage.setItem("gear_queue_active", "1");
+
+  window.location.href = hrefs[pos];
+}
+
+(function initQueue(){
+  hideOwnedGames();
+
+  renderFeatured();
+
+  const all = collectGamesFromPage();
+  const pool = all.filter(g => g.img && g.title && g.title.toUpperCase() !== "GAME");
+  const picked = shuffle(pool).slice(0, 10);
+  renderQueue(picked);
+
+
+  const startQueue = () => startQueueAndGoFirst();
+
+  document.getElementById("queue-hint")?.addEventListener("click", (e)=>{ e.stopPropagation(); startQueue(); });
+  document.getElementById("queue-more")?.addEventListener("click", (e)=>{ e.stopPropagation(); startQueue(); });
+  document.getElementById("queue-wrap")?.addEventListener("click", (e)=>{
+    if(e.target.closest(".queue-card")) return;
+    startQueue();
+  });
+})();
+
+const DISCOUNT_VALUES = [10,20,30,40,50,60,70,80,90];
+
+const DEAL_GAMES = [
+  "Frostpunk","stalker2","batman","ARCRaiders","expedition33",
+  "witcher","balatro","SlaytheSpire","METALGEARSOLIDΔ","HELLDIVERS",
+  "Jackbox","Cyberpunk","StreetFighter","UntilDawn","TheQuarry"
+];
+
+if(!sessionStorage.getItem("gear_discounts")){
+  const discounts = {};
+
+  DEAL_GAMES.forEach(id=>{
+    discounts[id] =
+      DISCOUNT_VALUES[Math.floor(Math.random() * DISCOUNT_VALUES.length)];
+  });
+
+  sessionStorage.setItem("gear_discounts", JSON.stringify(discounts));
+}
+(function applyDiscounts(){
+  const discounts = JSON.parse(sessionStorage.getItem("gear_discounts")) || {};
+
+  document.querySelectorAll("#deals-slider .deal-card").forEach(card=>{
+    const id = card.dataset.id;
+    const discount = discounts[id];
+    if(!discount) return;
+
+    const priceEl = card.querySelector(".game-price");
+    if(!priceEl) return;
+
+    const raw = priceEl.textContent.replace("₴","").trim();
+    if(raw === "Безкоштовно") return;
+
+    const basePrice = parseInt(raw,10);
+    if(isNaN(basePrice)) return;
+
+    const newPrice = Math.round(basePrice * (100 - discount) / 100);
+
+    card.style.position = "relative";
+
+    const badge = document.createElement("div");
+    badge.className = "discount-badge";
+    badge.textContent = `-${discount}%`;
+    card.appendChild(badge);
+
+    priceEl.innerHTML = `
+      <span class="old-price">${basePrice}₴</span>
+      <span class="new-price">${newPrice}₴</span>
+    `;
+  });
+})();
+
+const SEARCH_GAMES = [
+  ...document.querySelectorAll("#deals-slider .deal-card, #recommended-slider .game-card")
+].reduce((acc, el)=>{
+  const id = el.dataset.id;
+  if(!id || acc[id]) return acc;
+
+  const title = el.querySelector(".game-title")?.textContent?.trim();
+  if(!title) return acc;
+
+  const img =
+    bgUrlOf(el.querySelector(".deal-img") || el.querySelector(".game-img"));
+
+  const price =
+    el.querySelector(".game-price")?.textContent?.trim() || "";
+
+  acc[id] = { id, title, img, price };
+  return acc;
+},{});
+
+const searchInput = document.getElementById("search-input");
+const searchResults = document.getElementById("search-results");
+
+searchInput.addEventListener("input", ()=>{
+  const q = searchInput.value.trim().toLowerCase();
+  searchResults.innerHTML = "";
+
+  if(!q){
+    searchResults.style.display = "none";
+    return;
+  }
+
+  const discounts =
+    JSON.parse(sessionStorage.getItem("gear_discounts")) || {};
+
+  const ranked = Object.values(SEARCH_GAMES)
+    .map(g=>{
+      const t = g.title.toLowerCase();
+      let score = 0;
+
+      if(t === q) score = 100;
+      else if(t.startsWith(q)) score = 80;
+      else if(t.includes(q)) score = 50;
+
+      return { ...g, score };
+    })
+    .filter(g => g.score > 0)
+    .sort((a,b)=> b.score - a.score)
+    .slice(0, 10);
+
+  ranked.forEach(g=>{
+    const discount = discounts[g.id];
+    const item = document.createElement("div");
+    item.className = "search-item";
+
+    let priceHTML = g.price;
+    const base = parseInt(g.price);
+
+    if(
+      discount &&
+      !g.price.includes("Безкоштовно") &&
+      !isNaN(base)
+    ){
+      const newP = Math.round(base * (100 - discount) / 100);
+      priceHTML = `
+        <span class="search-discount">-${discount}%</span>
+        <span style="text-decoration:line-through;opacity:.6">${base}₴</span>
+        <span style="margin-left:6px">${newP}₴</span>
+      `;
+    }
+
+    item.innerHTML = `
+      <div class="search-img" style="background-image:url('${g.img}')"></div>
+      <div class="search-info">
+        <div class="search-title">${g.title}</div>
+        <div class="search-price">${priceHTML}</div>
+      </div>
+    `;
+
+    item.onclick = ()=>{
+      window.location.href = `game.html?id=${encodeURIComponent(g.id)}`;
+    };
+
+    searchResults.appendChild(item);
+  });
+
+  searchResults.style.display =
+    searchResults.children.length ? "block" : "none";
+});
+
+document.addEventListener("click", (e)=>{
+  if(!e.target.closest(".search")){
+    searchResults.style.display = "none";
+  }
+});
+
+function getLibrary(){
+  return JSON.parse(sessionStorage.getItem("gear_library")) || [];
+}
+
+function addToLibrary(id){
+  const lib = getLibrary();
+  if(!lib.includes(id)){
+    lib.push(id);
+    sessionStorage.setItem("gear_library", JSON.stringify(lib));
+  }
+}
+
+function hideOwnedGames(){
+  const lib = getLibrary();
+  if(!lib.length) return;
+
+  document.querySelectorAll(
+    "#deals-slider .deal-card, #recommended-slider .game-card"
+  ).forEach(card=>{
+    if(lib.includes(card.dataset.id)){
+      card.remove();
+    }
+  });
+}
+</script>
+</body>
+</html>

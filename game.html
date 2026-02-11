@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Game | GEAR</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:"Segoe UI",Arial;
+  background:#050505;
+  color:#d4af37;
+}
+
+a{color:#ffd700;text-decoration:none}
+
+.header{
+  background:#000;
+  border-bottom:1px solid #2a2a2a;
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:16px 24px;
+  display:flex;
+  align-items:center;
+  gap:32px;
+}
+
+.logo a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  line-height:1;
+}
+
+.logo a span{
+  font-size:26px;
+  font-weight:800;
+  letter-spacing:4px;
+  color:#ffd700;
+}
+
+.logo-icon{
+  width:34px;
+  height:34px;
+  object-fit:contain;
+  display:block;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.6));
+}
+
+.nav{
+  display:flex;
+  gap:22px;
+}
+
+.nav a{
+  font-size:18px;
+  font-weight:600;
+  color:#ffd700;
+  letter-spacing:1px;
+  position:relative;
+}
+
+.nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+  width:0;
+  height:2px;
+  background:#ffd700;
+  transition:.2s;
+}
+
+.nav a:hover::after{width:100%}
+
+.container{max-width:1200px;margin:0 auto;padding:24px}
+
+.top{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:24px;
+  align-items:start;
+}
+
+.gallery{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.gallery-main{
+  height:470px;
+  background:#000;
+  border:1px solid #2a2a2a;
+  background-size:cover;
+  background-position:center;
+  box-shadow:0 18px 40px rgba(0,0,0,.7);
+}
+
+.gallery-thumbs{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.gallery-thumbs .thumb{
+  height:170px;
+  background:#000;
+  border:1px solid #2a2a2a;
+  background-size:cover;
+  background-position:center;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.gallery-thumbs .thumb:hover{
+  border-color:#ffd700;
+  transform:scale(1.03);
+}
+
+.buy{
+  background:#0c0c0c;
+  border:1px solid #2a2a2a;
+  padding:16px;
+}
+
+.buy-image{
+  width:100%;
+  height:160px;
+  background:#000;
+  border:1px solid #2a2a2a;
+  background-size:cover;
+  background-position:center;
+  margin-bottom:14px;
+}
+
+.price{
+  font-size:28px;
+  font-weight:800;
+  color:#ffd700;
+  margin-bottom:10px;
+}
+
+.buy button{
+  width:100%;
+  padding:14px;
+  background:linear-gradient(180deg,#ffd700,#e6b800);
+  border:none;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.buy button:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.buy button:active{transform:scale(.97)}
+
+.rating{
+  margin-top:10px;
+  color:#a4d007;
+}
+
+.features{
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px solid #2a2a2a;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  font-size:13px;
+  color:#c7d5e0;
+}
+
+.section{margin-top:32px}
+.section h2{
+  border-bottom:1px solid #2a2a2a;
+  padding-bottom:6px;
+}
+
+.specs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.spec{
+  background:#0c0c0c;
+  border:1px solid #2a2a2a;
+  padding:12px;
+  font-size:13px;
+  color:#c7d5e0;
+}
+
+.reviews{margin-top:32px}
+.reviews-summary{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px;
+  background:#0c0c0c;
+  border:1px solid #2a2a2a;
+  margin-bottom:16px;
+}
+
+.review-score{font-size:22px;font-weight:800;color:#a4d007}
+.review-count{font-size:13px;color:#c7d5e0}
+.review-list{display:grid;gap:12px}
+
+.review{
+  background:#0c0c0c;
+  border:1px solid #2a2a2a;
+  padding:14px;
+  border-radius:2px;
+}
+
+.review-top{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  margin-bottom:6px;
+  opacity:.85;
+}
+
+.review-user{color:#ffd700;font-weight:700}
+.review-text{font-size:14px;color:#c7d5e0;line-height:1.5}
+.review-status{font-weight:700}
+.review-status.positive{color:#a4d007}
+.review-status.negative{color:#d94141}
+
+.next-queue{
+  margin-top:12px;
+  width:100%;
+  padding:12px;
+  background:linear-gradient(180deg,#ffd700,#e6b800);
+  border:1px solid #2a2a2a;
+  color:#000;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.next-queue:hover{
+  border-color:#ffd700;
+  filter:brightness(1.05);
+}
+
+.next-queue.end{
+  background:linear-gradient(180deg,#ffd700,#e6b800);
+  border-color:rgba(255,215,0,.35);
+  color:#000;
+}
+
+.next-queue.end:hover{
+  border-color:#ffd700;
+  filter:brightness(1.08);
+}
+
+.genre-line{
+  margin-top:12px;
+  padding:8px 12px;
+  display:block;
+  background:#0c0c0c;
+  border:1px solid #2a2a2a;
+  color:#ffd700;
+  font-weight:800;
+  letter-spacing:.6px;
+}
+
+.genre-line b{
+  color:#bfa44a;
+  font-weight:900;
+  margin-right:6px;
+}
+
+@media(max-width:900px){
+  .top{grid-template-columns:1fr}
+}
+
+html, body{
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+.buy button, .buy-image, .gallery-main, .gallery-thumbs .thumb{
+  pointer-events: auto;
+}
+
+.buy, .gallery, .gallery-main, .buy-image{
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 1024px){
+  .container{ padding: 18px; }
+
+  .top{ gap: 18px; }
+  .gallery-main{ height: 380px; }
+  .gallery-thumbs .thumb{ height: 140px; }
+
+  .features{ gap: 6px; font-size: 12px; }
+}
+
+@media (max-width: 768px){
+  .container{ padding: 14px; }
+
+  #game-title{
+    font-size: 24px;
+    line-height: 1.2;
+    margin: 10px 0 12px;
+  }
+
+  .top{
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .gallery-main{
+    height: 240px;
+    border-radius: 2px;
+  }
+
+  .gallery-thumbs{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .gallery-thumbs .thumb{
+    height: 95px;
+  }
+
+  .buy{
+    padding: 14px;
+  }
+
+  .buy-image{
+    height: 140px;
+  }
+
+  .price{
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  #buy-btn{
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 900;
+    border-radius: 2px;
+  }
+
+  .features{
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .specs{
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .review-text{ font-size: 13px; }
+
+}
+
+@media (max-width: 420px){
+  .container{ padding: 12px; }
+
+  #game-title{ font-size: 22px; }
+
+  .gallery-main{ height: 220px; }
+  .gallery-thumbs .thumb{ height: 85px; }
+
+  .buy-image{ height: 120px; }
+
+  .features{
+    grid-template-columns: 1fr;
+  }
+}
+
+@supports (padding: max(0px)){
+  @media (max-width: 768px){
+    .container{
+      padding-left: max(14px, env(safe-area-inset-left));
+      padding-right: max(14px, env(safe-area-inset-right));
+    }
+  }
+}
+@media (max-width: 768px){
+  .header-inner{
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .logo a span{
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .logo-icon{
+    width: 26px;
+    height: 26px;
+  }
+
+  .nav{
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar{ display:none; }
+
+  .nav a{
+    flex: 0 0 auto;
+    font-size: 15px;
+    letter-spacing: .5px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+  <a href="Index.html">
+    <img class="logo-icon" src="gear.png" alt="GEAR logo">
+    <span>GEAR</span></a></div>
+    <nav class="nav">
+      <a href="Index.html">Магазин</a>
+      <a href="library.html">Бібліотека</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+
+<h1 id="game-title"></h1>
+
+<div class="top">
+
+  <div class="gallery">
+    <div class="gallery-main" id="mainImage"></div>
+
+    <div class="gallery-thumbs">
+      <div class="thumb" onclick="swap(this)"></div>
+      <div class="thumb" onclick="swap(this)"></div>
+      <div class="thumb" onclick="swap(this)"></div>
+    </div>
+  </div>
+
+  <div class="buy">
+    <div class="buy-image" id="buyImage"></div>
+
+    <div class="price" id="game-price"></div>
+    <button id="buy-btn"></button>
+
+    <div class="rating" id="rating-all"></div>
+    <div class="rating" id="rating-30"></div>
+
+    <p><b>Розробник:</b> <span id="dev"></span></p>
+    <p><b>Видавець:</b> <span id="pub"></span></p>
+
+    <div class="features" id="features"></div>
+
+    <button class="next-queue" id="next-queue" style="display:none;">ДАЛІ ➜</button>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Опис</h2>
+  <p id="desc" style="color:#c7d5e0;line-height:1.6;"></p>
+</div>
+
+<div class="section">
+  <h2>Системні вимоги</h2>
+  <div class="specs">
+    <div class="spec" id="minSpec"></div>
+    <div class="spec" id="recSpec"></div>
+  </div>
+</div>
+
+<div class="reviews section" id="reviews-block">
+  <h2>Рецензії користувачів</h2>
+
+  <div class="reviews-summary">
+    <div class="review-score" id="review-score"></div>
+    <div class="review-count" id="review-count"></div>
+  </div>
+
+  <div class="review-list" id="review-list"></div>
+</div>
+
+</div>
+
+<script>
+function swap(el){
+  const main = document.getElementById('mainImage');
+  const temp = main.style.backgroundImage;
+  main.style.backgroundImage = el.style.backgroundImage;
+  el.style.backgroundImage = temp;
+}
+
+const GAMES = {
+  wot: {
+    title: "World of Tanks",
+    price: "Безкоштовно",
+    buyText: "Додати до бібліотеки",
+    cover: "https://gfn.am/en/games/media/images/wide_art_image-world-of-tanks-618565e2.original.jpg",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1407200/ss_6c0053268e7f60b2171c658af6c9b5621ac4a998.1920x1080.jpg?t=1768461647",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1407200/ss_85053345d2ddfec71e46d33106da789ff8cca1a5.1920x1080.jpg",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1407200/ss_aff0650fae6d5297281d4f95b02d27f2d0b77533.1920x1080.jpg?t=1768461647",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1407200/7c98888f8d86121065667decfc705d239dd5aaec/ss_7c98888f8d86121065667decfc705d239dd5aaec.1920x1080.jpg?t=1768461647"
+    ],
+    ratingAll: "81% позитивних | Дуже Схвальні (95670) За весь час.",
+    rating30: "71% позитивних | Переважно Схвальні (1246) За останні 30 дн.",
+    dev: "Wargaming Group Limited",
+    pub: "Wargaming Group Limited",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 17.10.2020",
+      "Гравець проти гравця"
+    ],
+    desc: `World of Tanks — це тактичний екшн із дуже різноманітним ігровим процесом, що залежить від класу техніки й ролі.
+Окрім звичайних PvP-боїв, тут є змагальні та кланові режими, спеціальні PvE- й PvPvE-події та багато іншого.
+Гра підійде і тим, хто прагне перемог, і тим, хто насолоджується процесом.
+
+Жанр: Бойовики, Онлайн.`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+Потребує 64-бітних процесора та операційної системи<br><br>
+ОС: Windows 7/8/8.1/10/11 x64<br><br>
+Процесор: Intel Core i5-3330 / AMD FX-6300<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 460 / AMD Radeon HD 8770<br><br>
+DirectX: 11<br><br>
+Місце на диску: 85 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+Потребує 64-бітних процесора та операційної системи<br><br>
+ОС: Windows 10/11 x64 з останніми оновленнями<br><br>
+Процесор: Intel Core i3-9100F / AMD Ryzen 3 3100<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: Nvidia GTX 1650 / AMD Radeon RX 580<br><br>
+DirectX: 11<br><br>
+Місце на диску: 85 GB<br>
+`,
+    reviews: {
+      scoreText: "71% Позитивні за останні 30 днів",
+      countText: "На основі 1246 рецензій",
+      list: [
+        {user:"TankCommander", positive:true, text:"Дуже глибокий та тактичний геймплей. Кожен бій відчувається по-новому, особливо в командній грі."},
+        {user:"SteelWolf", positive:true, text:"Велика кількість техніки, постійні оновлення та івенти. Ідеально для тих, хто любить PvP."},
+        {user:"OldDriver", positive:false, text:"Багато складних механік та динаміки, ця гра не для мене."}
+      ]
+    }
+  },
+
+  stalker2: {
+    title: "S.T.A.L.K.E.R. 2: Heart of Chornobyl",
+    price: "1400₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1643320/3e525c6969728ec1641c5834e660472357fcd4cf/header.jpg?t=1765979308",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1643320/ss_bb0366c211125a7cfeeafe14d34f4acb20efc706.1920x1080.jpg?t=1765979308",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1643320/ss_9e6718fbf965951c519a1fbe300bcfce85b2ea2f.1920x1080.jpg?t=1765979308",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1643320/ss_8589bf4f88762910952fd0f1c3f6072d31f27aad.1920x1080.jpg?t=1765979308",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1643320/ss_1fe5db2c19c1deb43e442149760327db8b6876bd.1920x1080.jpg?t=1765979308"
+    ],
+    ratingAll: "80% позитивних | Дуже схвальні (97 784) За весь час.",
+    rating30: "76% позитивних | Переважно схвальні (2 043) За останні 30 дн.",
+    dev: "GSC Game World",
+    pub: "GSC Game World (worldwide), SEGA (Japan), 4Divinity (China and South East Asia)",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 20.11.2024",
+      "Однокористувацька гра"
+    ],
+    desc: `Відкрийте для себе Чорнобильську Зону Відчуження сповнену небезпечних ворогів, смертельних аномалій та потужних артефактів.
+    Напишіть свою власну епічну історію, прокладаючи свій шлях до Серця Чорнобиля.
+
+Жанр: Бойовики, Пригоди, Хоррор, Виживання`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7-7700K / AMD Ryzen 5 1600X<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: Nvidia GeForce GTX 1060 6GB / AMD Radeon RX 580 8GB / Intel Arc A750<br><br>
+Місце на диску: 160 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7-11700 / AMD Ryzen 7 5800X<br><br>
+Оперативна пам’ять: 32 GB<br><br>
+Відеокарта: Nvidia GeForce RTX 3070 Ti / Nvidia GeForce RTX 4070 / AMD Radeon RX 6800 XT<br><br>
+Місце на диску: 160 GB<br>
+`,
+    reviews: {
+      scoreText: "76% Позитивні за останні 30 днів",
+      countText: "На основі 2 043 рецензій",
+      list: [
+        {user:"Ruby_Wolf", positive:true, text:"Вітаю всіх, хто нарешті дочекався! Сталкере, завжди пам’ятай - багів не існує, то все аномалії."},
+        {user:"Medic gaming", positive:true, text:"Титанічна праця. Виважений баланс між традиціями та інноваціями. Саме на такого Сталкера я чекав. Моя повага, розробники."},
+        {user:"OldStalker", positive:true, text:"☢️ Зона не відпускає — я просто хотів артефакт, а знайшов сенс життя ☢️10/10 Те куди хочеться повернутись!"}
+      ]
+    }
+  },
+
+  batman: {
+    title: "Batman™: Arkham Knight",
+    price: "279₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/208650/header.jpg?t=1745534372",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/208650/ss_88b07767c3d67b3d5be85fb27c97527770a98e7e.1920x1080.jpg?t=1745534372",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/208650/ss_9ccb4ec0388cd868c0f49580f98da94e8bd0e213.1920x1080.jpg?t=1745534372",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/208650/ss_4c9d5fb849b1a7169184a37db000919b276056fe.1920x1080.jpg?t=1745534372",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/208650/ss_315ff2cdd5f50d28614ae9cfa45283bb2b9f969e.1920x1080.jpg?t=1745534372"
+    ],
+    ratingAll: "92% позитивних | Дуже схвальні (103 810) За весь час.",
+    rating30: "96% позитивних | Виключно схвальні (1 324) За останні 30 дн.",
+    dev: "Rocksteady Studios",
+    pub: "WB Games",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 23.06.2015",
+      "Однокористувацька гра"
+    ],
+    desc: `Batman™: Arkham Knight завершує нагороджену трилогію Arkham від студії Rocksteady епічним фіналом. 
+    Розроблена ексклюзивно для нових платформ, гра Batman: Arkham Knight представляє унікальну версію Бетмобіля від студії Rocksteady. Довгоочікувана поява цієї легендарної машини в поєднанні з визнаним геймплеєм 
+    серії Arkham дають гравцям змогу по-справжньому відчути себе Бетменом, що мчить вулицями Ґотем-Сіті або літає у небі над містом.
+    У цьому вибуховому фіналі Бетмен стикається з найбільшою загрозою для міста, яке він присягнувся захищати, — повертається Пугало, з метою об'єднати суперзлочинців Ґотема й знищити героя раз і назавжди.
+
+Жанр:  Бойовики, Пригоди, Сюжет`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7/8.1 x64<br><br>
+Процесор: Intel Core i5-750, 2.67 GHz | AMD Phenom II X4 965, 3.4 GHz<br><br>
+Оперативна пам’ять: 6 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 660 | AMD Radeon HD 7870<br><br>
+DirectX: 11<br><br>
+Місце на диску: 45 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7-3770, 3.4 GHz | AMD FX-8350, 4.0 GHz<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта:  NVIDIA GeForce GTX 760 | AMD Radeon HD 7950<br><br>
+DirectX: 11<br><br>
+Місце на диску: 55 GB<br>
+`,
+    reviews: {
+      scoreText: "96% Позитивні за останні 30 днів",
+      countText: "На основі 1 324 рецензій",
+      list: [
+        {user:"Dark Knight", positive:true, text:"Ніколи не був фанатом Бетмена, але серія Arkham це просто щось! Batman: Arkham Knight це достойний фінал для дуже крутої історії!"},
+        {user:"Uncle Sam 2000", positive:true, text:"Batman: Arkham Knight – це потужне завершення культової серії. Гра захоплює від першої хвилини: похмурий Ґотем, безліч ворогів і новий, загадковий Лицар Аркхема. Бетмобіль додає динаміки, а бої, як завжди, захоплюють плавністю і стилем. Графіка та саундтрек створюють неймовірну атмосферу, занурюючи в безперервну напругу. Це гра, яка заслуговує на увагу."},
+        {user:"Phantom Soul", positive:false, text:"Неймовірно перегружений геймплей, який має 100500 механік і стільки ж привʼязок до клавіш. 100500 складних головоломок Загадника добʼє вас, якщо натискати 30 клавіш одночасно вас не так вже й напрягало"}
+      ]
+    }
+  },  
+  
+  ARCRaiders: {
+    title: "ARC Raiders",
+    price: "1160₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/b26e2a315d32ef462a07cf0e36eb06a2b810d0c9/header_alt_assets_0.jpg?t=1768418746",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/cb49dfbcd7175c86e297b35ffc54cf779708f0ae/ss_cb49dfbcd7175c86e297b35ffc54cf779708f0ae.1920x1080.jpg?t=1768418746",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/5188aa2b07920afe9753409ea9fe3d1324cfc294/ss_5188aa2b07920afe9753409ea9fe3d1324cfc294.1920x1080.jpg?t=1768418746",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/0b1fa1294fa269633112be2c3d8758df42baebe1/ss_0b1fa1294fa269633112be2c3d8758df42baebe1.1920x1080.jpg?t=1768418746",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1808500/1763664f3ea80080867eafa751685b7feec950c8/ss_1763664f3ea80080867eafa751685b7feec950c8.1920x1080.jpg?t=1768418746"
+    ],
+    ratingAll: "87% позитивних | Дуже схвальні (221 286) За весь час.",
+    rating30: "85% позитивних | Дуже схвальні (46 271) За останні 30 дн.",
+    dev: "Embark Studios",
+    pub: "Embark Studios",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 30.10.2025",
+      "Гравець проти гравця в мережі | Мережева Кооп"
+    ],
+    desc: `ARC Raiders — багатокористувацька гра жанру extraction adventure, дія якої розгортається у суворому майбутньому на Землі,
+    атакованій загадковими механічними загарбниками ARC.
+    Ігровий процес ARC Raiders поділяється на дві частини: на поверхні, де на вас чекають смертоносні машини, й у підземному поселенні Сперанца, де вирує життя. Створюйте,
+    ремонтуйте та вдосконалюйте спорядження у власній майстерні, а потім виходьте на поверхню на пошуки ресурсів — залишків зруйнованого, але мальовничого світу. 
+    Ви можете грати на самоті або групою (до трьох гравців), але в будь-якому разі вам доведеться мати справу з постійною загрозою машин ARC та непередбачуваними діями інших людей. 
+    Зрештою, вам вирішувати, яким рейдером ви станете і як далеко ви готові зайти заради перемоги.
+
+Жанр: Бойовики, Онлайн, Пригоди`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel Core i5-6600K or AMD Ryzen R5 1600<br><br>
+Оперативна пам’ять: 12 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 1050 Ti or AMD Radeon RX 580 or Intel Arc A380<br><br>
+DirectX: 12<br><br>
+Місце на диску: 36 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i5-9600K or AMD Ryzen 5 3600<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: NVIDIA GeForce RTX 2070 or AMD Radeon RX 5700 XT or Intel Arc B570<br><br>
+DirectX: 12<br><br>
+Місце на диску: 36 GB<br>
+`,
+    reviews: {
+      scoreText: "85% Позитивні за останні 30 днів",
+      countText: "На основі 46 271 рецензій",
+      list: [
+        {user:"Raiden_Artist", positive:true, text:"Ваша гра просто неймовірна, давно не відчував таких емоцій від гри, та ще й мережевої, просто ВАУ!!!"},
+        {user:"Liquid Ocelot", positive:false, text:"Баланс у грі нульовий, гравець із звичайною непрокачаною зброєю вбиває тебе швидше чим ти зі своїм 4 лвл кулеметом і фіолетовим щитом."},
+        {user:"Dimon_UA", positive:true, text:"Гра просто чудова — мене реально затягнуло. Дуже цікаво досліджувати карти, постійно відчувається напруга й небезпека — чи то від інших гравців, чи від арків."}
+      ]
+    }
+  },
+
+  expedition33: {
+    title: "Clair Obscur: Expedition 33",
+    price: "1500₴",
+    buyText: "Купити",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/be3305b02d4db0dffa3458537118423bf2792d7e/header.jpg?t=1766050625",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/ss_483a27df5072beb3a4650634a764bda750fbcb82.1920x1080.jpg?t=1766050625",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/ss_8439c07d7b1f2fcfc6449db5f051f8d0867f4785.1920x1080.jpg?t=1766050625",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/ss_0902af724ac45a9093dee022a7893dc50cbf555e.1920x1080.jpg?t=1766050625",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1903340/ss_e49800e906e8a0f00707458c836567c933603bac.1920x1080.jpg?t=1766050625"
+    ],
+    ratingAll: "95% позитивних | Дуже схвальні (161 659) За весь час.",
+    rating30: "91% позитивних | Дуже схвальні (12 989) За останні 30 дн.",
+    dev: "Sandfall Interactive",
+    pub: "Kepler Interactive",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 24.04.2025",
+      "Однокористувацька гра"
+    ],
+    desc: `Раз на рік Художниця прокидається й малює на Моноліті. 
+    Малює своє прокляте число. Тоді кожен, хто досяг цього віку, перетворюється на дим і зникає. 
+    Рік у рік цифра зменшується. Більшає стертих людей. Уже завтра вона прокинеться й виведе: «33». 
+    Тому ми вирушаємо в останню експедицію. Ми знищимо Художницю, щоб вона ніколи більше не малювала смерть.
+    Ми — Експедиція 33.
+    Clair Obscur: Expedition 33 — революційна покрокова рольова гра з унікальними механіками реального часу. 
+    Від її захопливих боїв неможливо відірватися. Досліджуйте фантастичний світ, натхненний Прекрасною епохою Франції, і долайте небезпечних ворогів.
+
+Жанр: Сюжет, Рольові ігри, Пригоди`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel Core i7-8700K / AMD Ryzen 5 1600X<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 1060 6 GB / AMD Radeon RX 5600 XT 6 GB / Intel Arc A380 6 GB<br><br>
+DirectX: 12<br><br>
+Місце на диску: 55 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 11 x64<br><br>
+Процесор: Intel Core i7-12700K / AMD Ryzen 7 5800X<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: NVIDIA GeForce RTX 3060 Ti 8 GB / AMD Radeon RX 6800 XT 16 GB<br><br>
+DirectX: 12<br><br>
+Місце на диску: 55 GB<br>
+`,
+    reviews: {
+      scoreText: "91% Позитивні за останні 30 днів",
+      countText: "На основі 12 989 рецензій",
+      list: [
+        {user:"Svistal", positive:true, text:"Це найкраще, що я коли небудь грав. А грав я багато. Я не хочу говорити багато - просто купіть цю гру, і пройдіть на 100%. Це будуть найкращі 80 годин вашого життя. Музика, геймплей, відео вставки, система бою - це все як окремий вид насолоди поодинці, а разом - як незабутня мандрівка по Люм'єру."},
+        {user:"Minos", positive:true, text:"Гра просто Absolute Cinema!!! Нестандартний сюжет та персонажі! Музика це просто вогонь!!! Геймплей цікавий, особливо для такого жанру ігор, хоча ігри такого жанру явно не для мене. Вся гра пропитана французською естетикою та колоритом. Недаремно розробники пішли із Ubisoft та розвивали свої ідеї без них. Мій абсолютний фаворит на гру 2025 року!"},
+        {user:"Borshch_Slayer", positive:true, text:"Ця гра з перших секунд чіпляє тебе і не відпускає. Захопливий сюжет, неймовірна музика, живі персонажі, яким хочеться співчувати, відкритий світ, який не втомлюєшся досліджувати. Геймлей цікавий і сподобається, навіть людям, що не люблять покрокову бойову систему. Якщо не знаєте в що пограти, то обов'язково спобуйте цю гру 10/10"}
+      ]
+    }
+  },
+
+  witcher: {
+    title: "The Witcher 3: Wild Hunt",
+    price: "950₴",
+    buyText: "Купити",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/ad9240e088f953a84aee814034c50a6a92bf4516/header.jpg?t=1768303991",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/ss_90a33d7764a2d23306091bfcb52265c3506b4fdb.1920x1080.jpg?t=1768303991",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/ss_dc33eb233555c13fce939ccaac667bc54e3c4a27.1920x1080.jpg?t=1768303991",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/ss_07812c174bb6b96c29895ddc27404143df7aba6d.1920x1080.jpg?t=1768303991",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/ss_908485cbb1401b1ebf42e3d21a860ddc53517b08.1920x1080.jpg?t=1768303991"
+    ],
+    ratingAll: "96% позитивних | Дуже схвальні (803 355) За весь час.",
+    rating30: "95% позитивних | Дуже схвальні (6 518) За останні 30 дн.",
+    dev: "CD PROJEKT RED",
+    pub: "CD PROJEKT RED",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 18.05.2015",
+      "Однокористувацька гра"
+    ],
+    desc: `Ви — Ґеральт із Рівії, найманий мисливець на чудовиськ. Перед вами цілий континент,
+    просяклий війнами та заполонений різними потворами та воїнами.
+    
+  Жанр: Рольові ігри, Пригоди, Сюжет`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7/8 x64<br><br>
+Процесор: Intel CPU Core i5-2500K / AMD A10-5800K APU<br><br>
+Оперативна пам’ять: 6 GB<br><br>
+Відеокарта: Nvidia GPU GeForce GTX 660 / AMD GPU Radeon HD 7870<br><br>
+DirectX: 11<br><br>
+Місце на диску: 50 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор:  Intel Core i5-7400 / Ryzen 5 1600<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: Nvidia GTX 1070 / Radeon RX 480<br><br>
+DirectX: 12<br><br>
+Місце на диску: 50 GB<br>
+`,
+    reviews: {
+      scoreText: "95% Позитивні за останні 30 днів",
+      countText: "На основі 6 518 рецензій",
+      list: [
+        {user:"Miller", positive:true, text:"Гра просто неймовірна, таких цікавих завдань (в тому числі і не сюжетних), ви не зустрінете в жодній грі, чудовий і живий світ, просто купа випадкових подій, що можуть трапитись на вашому шляху, цей світ цікаво дожліджувати. Всім рекомендую познайомитись з світом Відьмака 3, навіть якщо поки не знайомі с цією серією ігор, не вагаючись можете почати з цієї частини. Це краща RPG-гра для мене по сьогоднішній день."},
+        {user:"Fallen", positive:true, text:"Гра просто Absolute Cinema!!! Нестандартний сюжет та персонажі! Музика це просто вогонь!!! Геймплей цікавий, особливо для такого жанру ігор, хоча ігри такого жанру явно не для мене. Вся гра пропитана французською естетикою та колоритом. Недаремно розробники пішли із Ubisoft та розвивали свої ідеї без них. Мій абсолютний фаворит на гру 2025 року!"},
+        {user:"Amogus", positive:false, text:"Не знаю як в це грати дуже скучно і зовсім не цікава гра гроші на вітер."}
+      ]
+    }
+  },
+
+  balatro: {
+    title: "Balatro",
+    price: "325₴",
+    buyText: "Купити",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2379780/7a85430784e4d613cdb0547414d8cf16ffa45747/header.jpg?t=1762516142",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2379780/96208723dbedef49d71bf1b0a74aee1689018c50/ss_96208723dbedef49d71bf1b0a74aee1689018c50.1920x1080.jpg?t=1762516142",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2379780/ss_e32ac94d7d1d6be7dd015d78f2b52aeb4cc282ed.1920x1080.jpg?t=1762516142",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2379780/ss_b8455573ec1fd2c9412f22bd8df05f2d8027a95b.1920x1080.jpg?t=1762516142",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2379780/ss_204350350761316ad3aa8b0184689f3f93e01f7b.1920x1080.jpg?t=1762516142"
+    ],
+    ratingAll: "97% позитивних | Дуже схвальні (145 925) За весь час.",
+    rating30: "97% позитивних | Дуже схвальні (3 285) За останні 30 дн.",
+    dev: "LocalThunk",
+    pub: "Playstack",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 18.05.2015",
+      "Однокористувацька гра"
+    ],
+    desc: `Покерний рогалик. Balatro — гіпнотично приємна гра про будування колоди, де ви будете використовувати нелегальні покерні комбінації,
+    викладати джокерів, що змінюють гру, і активувати адреналінові комбо.
+    
+  Жанр: Аркади, Інді, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7/8 x64<br><br>
+Процесор: Intel Core i3<br><br>
+Оперативна пам’ять: 1 GB<br><br>
+Відеокарта: OpenGL 2.1 compatible graphics card, integrated graphics<br><br>
+Місце на диску: 250 MB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор:  Intel Core i5 <br><br>
+Оперативна пам’ять: 2 GB<br><br>
+Відеокарта: Nvidia GTX 240 2GB <br><br>
+Місце на диску: 250 MB<br>
+`,
+    reviews: {
+      scoreText: "97% Позитивні за останні 30 днів",
+      countText: "На основі 3 285 рецензій",
+      list: [
+        {user:"Joker", positive:true, text:"Геніальний покер з неймовірним візуальним стилем котрий не всі зрозуміли!"},
+        {user:"Slater", positive:true, text:"Balatro — це карткова гра жанру roguelike із покерними механіками. Тобі треба збирати колоду, проходити випробування й планувати комбінації, щоб здобути максимум балів. Що сподобалось:Оригінальна ідея: мікс покеру і стратегічного будування колоди.Зовнішній вигляд: стильний ретро-дизайн із атмосферною музикою."},
+        {user:"Perepixel", positive:true, text:"Геніально. У грі одне з найнезвичайніших поєднань жанрів, і воно працює! 10 з 10"}
+      ]
+    }
+  },
+
+  SlaytheSpire: {
+    title: "Slay the Spire",
+    price: "500₴",
+    buyText: "Купити",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/header.jpg?t=1764833720",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/ss_c171816f7ecd35b5b46d2fa27532f4c5b8ca3cc5.1920x1080.jpg?t=1764833720",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/ss_8af73365121b1b1e2d8004fca2cbffb9b9f6d7a5.1920x1080.jpg?t=1764833720",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/ss_01aa3e7759e457bfbf2422f31c325d7b3ba8a6eb.1920x1080.jpg?t=1764833720",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/646570/ss_1299d7fe55771cf564848c5046fbef7936178440.1920x1080.jpg?t=1764833720"
+    ],
+    ratingAll: "97% позитивних | Дуже схвальні (176 042) За весь час.",
+    rating30: "96% позитивних | Дуже схвальні (6 950) За останні 30 дн.",
+    dev: "Mega Crit",
+    pub: "Mega Crit",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 23.01.2019",
+      "Однокористувацька гра"
+    ],
+    desc: `Ми поєднали карткові та мандрівні ігри, створивши найкращий однокористувацький складальник колоди, який ми тільки могли.
+    Створіть свою унікальну колоду, зустріньтесь із чудернацькими істотами, знайдіть амулети надприродної сили, та підкоріть Вежу!
+    Два головних героя у яких є безліч власний, унікальних карт. (З планами на третього)
+    200+ повністю реалізованих карт.
+    50+ унікальних боїв.
+    100+ предметів.
+    Випадкове, процедурне створення рівнів.
+    
+  Жанр: Інді, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7/8 x64<br><br>
+Процесор: Intel CPU Core i3 2.0 Ghz<br><br>
+Оперативна пам’ять: 2 GB<br><br>
+Відеокарта: 1Gb Video Memory, capable of OpenGL 3.0+<br><br>
+Місце на диску: 1 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор:  Intel Core i5 2.0 Ghz<br><br>
+Оперативна пам’ять: 2 GB<br><br>
+Відеокарта: Nvidia GTX 200 2GB<br><br>
+Місце на диску: 1 GB<br>
+`,
+    reviews: {
+      scoreText: "96% Позитивні за останні 30 днів",
+      countText: "На основі 6 950 рецензій",
+      list: [
+        {user:"Slanec", positive:true, text:"Гарно продумана карткова гра. Треба ретельно спланувати кожен наступний крок, щоб дійти до мети, долаючи всі небезпечні несподіванки на своєму шляху. Виглядає гарно і ігролад достатньо різноманітний."},
+        {user:"Rimen", positive:false, text:"Засриптована фігня, не цікава. Рандом відсутній повністю та великий дізбаланс."},
+        {user:"Fraizer", positive:true, text:"Цікава та реіграбельна. Ви зможете зібрати колоду, яка буде ламати гру. Рандом не дає розслаблятись та змушує адаптуватись. Я думаю, що спробувати цю гру точно варто, якщо вам подобаються карточні ігри."}
+      ]
+    }
+  },
+
+  METALGEARSOLIDΔ: {
+    title: "METAL GEAR SOLID Δ: SNAKE EATER",
+    price: "1475₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2417610/05c97cbcd0cfc27c8ed6c7fc6d81e0995aa2a7d4/header.jpg?t=1762249119",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2417610/ss_067293ab0472c8701d8eda13e1a870484aedb7e4.1920x1080.jpg?t=1762249119",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2417610/ss_314db4d0d0ed652b5f080fc4cfd441e7bccbfaa4.1920x1080.jpg?t=1762249119",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2417610/ss_98ada80d8590577bb93becae3ab1dcca0ecd0256.1920x1080.jpg?t=1762249119",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2417610/ss_b63fda5d26ec95f8e12d78f5d23cb19484c73bf5.1920x1080.jpg?t=1762249119"
+    ],
+    ratingAll: "83% позитивних | Дуже схвальні (10 029) За весь час.",
+    rating30: "80% позитивних | Дуже схвальні (561) За останні 30 дн.",
+    dev: "KONAMI",
+    pub: "KONAMI",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 28.08.2025",
+      "Гравець проти гравця в мережі | Однокористувацька гра"
+    ],
+    desc: `Зустрічайте ремейк гри 2004 року METAL GEAR SOLID 3 з тією ж неймовірною історією і яскравим світом, 
+    але з оновленою графікою та 3D-звуком, що допоможе ще більше зануритися в атмосферу джунглів.
+    Приготуйтеся провести не один десяток годин у цьому неперевершеному стелс-бойовику на виживання.
+
+Жанр: Бойовики, Сюжет`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор:  Intel i5-8600 or AMD Ryzen 5 3600<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: RTX 2060 Super 8GB<br><br>
+DirectX: 12<br><br>
+Місце на диску: 118 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel i7-8700K or AMD Ryzen 5 3600<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: RTX 3080<br><br>
+DirectX: 12<br><br>
+Місце на диску: 118 GB<br>
+`,
+    reviews: {
+      scoreText: "80% Позитивні за останні 30 днів",
+      countText: "На основі 561 рецензій",
+      list: [
+        {user:"Invisible", positive:true, text:"Одна з найкращих ігор в яких грав. Ремастер гри 2004 року, грається досить свіжо, завдяки продуманому і вирівненому геймплею, найкращі бос файти в які грав. Звісно ж один з найкращих сюжетів в іграх взагалі. Однозначно маст плей 12/10."},
+        {user:"Lord", positive:true, text:"Глибокий і цікавий сюжет 10/10, багато філософії є над чим задуматись."},
+        {user:"Pyro", positive:false, text:"Це найгірша гра в яку я колись грав. на стільки не оптимізована та халтурно зроблена. На стільки сильно відчувається що конамі просто зробили все можливе щоб гравці зненавиділи цю гру. "}
+      ]
+    }
+  },
+
+  HELLDIVERS: {
+    title: "HELLDIVERS 2",
+    price: "1200₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/14293cf6c4eeb6959b9333ecd42fcc021a8fc1e3/header.jpg?t=1767634300",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_e45cb071779848564b3d2dcd7c3d38b7bd81cf9c.1920x1080.jpg?t=1767634300",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_cb276fe9f0b09683bdbc496f82b405dbe0ffa1f1.1920x1080.jpg?t=1767634300",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_3b08a991443164a65f84f1bd9f1363e6c2ec4581.1920x1080.jpg?t=1767634300",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/553850/ss_d0ac3830833a68d19d4a97c70aef0fba20bf0761.1920x1080.jpg?t=1767634300"
+    ],
+    ratingAll: "77% позитивних | Дуже схвальні (792 448) За весь час.",
+    rating30: "87% позитивних | Дуже схвальні (4 985) За останні 30 дн.",
+    dev: "Arrowhead Game Studios",
+    pub: "PlayStation Publishing LLC",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 08.02.2024",
+      "Мережева кооперативна гра"
+    ],
+    desc: `Остання лінія оборони Галактики. Приєднуйтеся до Пекельних десантників та боріться 
+    за свободу у ворожій галактиці у швидкому, шаленому та жорстокому шутері від третьої особи.
+
+Жанр: Бойовики, Онлайн, Пригоди`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel Core i7-4790K or AMD Ryzen 5 1500X<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 1050 Ti or AMD Radeon RX 470<br><br>
+Місце на диску: 135 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7-9700K or AMD Ryzen 7 3700X<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: NVIDIA GeForce RTX 2060 or AMD Radeon RX 6600XT<br><br>
+Місце на диску: 135 GB<br>
+`,
+    reviews: {
+      scoreText: "87% Позитивні за останні 30 днів",
+      countText: "На основі 4 985 рецензій",
+      list: [
+        {user:"Soloway", positive:true, text:"Демократія сама себе не розповсюдить, панове!Приєднуйтесь до пекельного десанту!"},
+        {user:"Vakura", positive:true, text:"Вкрай фановий і продуманий кооперативний шутер з неймовірно веселим геймплеєм. Ідеальний вибір як для соло, так і для гри з друзями."},
+        {user:"Neko_Lapa", positive:false, text:"Чудовий симулятор спроби підключитися до сервера."}
+      ]
+    }
+  },
+
+  Jackbox: {
+    title: "The Jackbox Party Pack 11",
+    price: "600₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3364070/35c35317cc3f6ac5733896ab00c4cfbd5a1a025d/header.jpg?t=1762972044",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3364070/ec1efafdcdfc6aa9bd0c05d65de8cd9e269598fc/ss_ec1efafdcdfc6aa9bd0c05d65de8cd9e269598fc.1920x1080.jpg?t=1762972044",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3364070/ab1fad219fcf37340fc31000fe9f7f528dfdf5f8/ss_ab1fad219fcf37340fc31000fe9f7f528dfdf5f8.1920x1080.jpg?t=1762972044",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3364070/6bf1fe5467886d0348b45d02b28c40b2ce256877/ss_6bf1fe5467886d0348b45d02b28c40b2ce256877.1920x1080.jpg?t=1762972044",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/3364070/e21b9b8725795c2626d60d61d357dc0eb96d1306/ss_e21b9b8725795c2626d60d61d357dc0eb96d1306.1920x1080.jpg?t=1762972044"
+    ],
+    ratingAll: "94% позитивних | Дуже схвальні (334) За весь час.",
+    rating30: "92% позитивних | Дуже схвальні (41) За останні 30 дн.",
+    dev: "Jackbox Games, Inc.",
+    pub: "Jackbox Games, Inc.",
+    features: [
+      "Мови:", "Українська",
+      "English", "German", 
+      "Spanish", "French", 
+      "Вихід: 08.02.2024",
+      "Мережева кооперативна гра | Гравець проти гравця в мережі"
+    ],
+    desc: `Пакет повертається! Із 5 новими іграми з набору Jackbox Party Pack 11 ігрові вечори перетворяться на дещо зовсім нове.
+    Зводьте нанівець звичайні жарти в Doominate, записуйте голос у Hear Say, куховарте в Cookie Haus, вивчайте зачіпки в Suspectives та співпрацюйте в Legends of Trivia!
+  Жанр: Онлайн, Аркади, Інді, Рольові ігри, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: 2.66 Ghz Core 2 Duo<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: GeForce 500+ / Radeon 5000+<br><br>
+Місце на диску: 3 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: 2.33 GHz Quad Core<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: GeForce 600+ / Radeon 6000+<br><br>
+Місце на диску: 3 GB<br>
+`,
+    reviews: {
+      scoreText: "92% Позитивні за останні 30 днів",
+      countText: "На основі 41 рецензій",
+      list: [
+        {user:"Heins", positive:true, text:"Класна гра для посиділок з друзями."},
+        {user:"Vitamin", positive:true, text:"Це справді один з найкращих паків, які ми мали за останні роки, цей — на всі часи. Він НАСТІЛЬКИ хороший."},
+        {user:"Stardust", positive:false, text:"Бездушний та ненатхненний. Жахливий порівняно з попередніми виданнями."}
+      ]
+    }
+  },
+
+  Cyberpunk: {
+    title: "Cyberpunk 2077",
+    price: "1400₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/e9047d8ec47ae3d94bb8b464fb0fc9e9972b4ac7/header.jpg?t=1769417481",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/ss_4bda6f67580d94832ed2d5814e41ebe018ba1d9e.1920x1080.jpg?t=1769417481",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/ss_0002f18563d313bdd1d82c725d411408ebf762b0.1920x1080.jpg?t=1769417481",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/ss_7924f64b6e5d586a80418c9896a1c92881a7905b.1920x1080.jpg?t=1769417481",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1091500/ss_9beef14102f164fa1163536d0fb3a51d0a2e4a3f.1920x1080.jpg?t=1769417481"
+    ],
+    ratingAll: "86% позитивних | Дуже схвальні (826 721) За весь час.",
+    rating30: "94% позитивних | Дуже схвальні (10 492) За останні 30 дн.",
+    dev: "CD PROJEKT RED",
+    pub: "CD PROJEKT RED",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 10.12.2020",
+      "Однокористувацька гра"
+    ],
+    desc: `Cyberpunk 2077 — пригодницький бойовик і рольова гра з відкритим світом.
+    Дія відбувається у темному майбутньому Найт-Сіті, небезпечного мегаполіса, одержимого владою, гламуром і ненаситною модифікацією тіла.
+    
+  Жанр: Рольові ігри, Сюжет, Пригоди, Бойовики`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Core i7-6700 or Ryzen 5 1600<br><br>
+Оперативна пам’ять: 12 GB<br><br>
+Відеокарта: GeForce GTX 1060 6GB or Radeon RX 580 8GB or Arc A380<br><br>
+DirectX: 12<br><br>
+Місце на диску: 70 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Core i7-12700 or Ryzen 7 7800X3D<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: GeForce RTX 2060 SUPER or Radeon RX 5700 XT or Arc A770<br><br>
+DirectX: 12<br><br>
+Місце на диску: 70 GB<br>
+`,
+    reviews: {
+      scoreText: "94% Позитивні за останні 30 днів",
+      countText: "На основі 10 492 рецензій",
+      list: [
+        {user:"Sverch", positive:true, text:"Найкраща гра, в яку я грав останні два роки. Кожне проходження як вперший раз. Краще ніж ААА ігри 2022-2023 року."},
+        {user:"Ursa", positive:false, text:"Грi стільки років, а вона досі не оптимiзована."},
+        {user:"Proton", positive:true, text:"Я не відчував себе прихильником даного жанру, мабуть як і багато з вас, але коли ти починаєш грати ти розумієш, що це те чого тобі не хватало, багато музики, сюжет, персонажі, які відчуваються живішими чим в більшості ігор, ти відчуваєш життя в цій грі. Я зрадів, що вдалося зіграти в цей шедевр."}
+      ]
+    }
+  },
+
+  StreetFighter: {
+    title: "Street Fighter 6",
+    price: "1200₴",
+    buyText: "Купити",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1364780/header.jpg?t=1769142441",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1364780/ss_449d488d2edbe785c4e6010fede1c3b8dae8e388.1920x1080.jpg?t=1769142441",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1364780/ss_3ceb422dbef5f8495e690ed526f684fdcb1022ec.1920x1080.jpg?t=1769142441",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1364780/ss_10191fb5ab48cee99d7a43e636db9202938f143e.1920x1080.jpg?t=1769142441",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1364780/ss_201488fc9f1aa5e29e2fc6d96ef2b66e41ddf32e.1920x1080.jpg?t=1769142441"
+    ],
+    ratingAll: "83% позитивних | Дуже схвальні (43 671) За весь час.",
+    rating30: "77% позитивних | Дуже схвальні (912) За останні 30 дн.",
+    dev: "CAPCOM Co., Ltd.",
+    pub: "CAPCOM Co., Ltd.",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 02.06.2023",
+      "Однокористувацька гра | Гравець проти гравця в мережі"
+    ],
+    desc: `Зустрічайте нового супротивника від Capcom! Street Fighte 6 побачить світ 2 червня 2023 року та представить наступну еволюцію серії Street Fighter!
+    Гра Street Fighter 6 пропонує три різні режими: «Світове турне», «Бійцівський майданчик» і «Бойовий центр».
+
+Жанр: Бойовики, Аркади`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel Core i5-7500 / AMD Ryzen 3 1200<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: GTX1060 / Radeon RX 580<br><br>
+DirectX: 12<br><br>
+Місце на диску: 60 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7 8700 / AMD Ryzen 5 3600<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: RTX2070 / Radeon RX 5700XT<br><br>
+DirectX: 12<br><br>
+Місце на диску: 60 GB<br>
+`,
+    reviews: {
+      scoreText: "77% Позитивні за останні 30 днів",
+      countText: "На основі 912 рецензій",
+      list: [
+        {user:"Bober", positive:true, text:"Дуже красива гра з великою кількістю контенту, починаючи з великої одиночної кампанії і закінчуючи ранговим режимом в мультиплеєрі."},
+        {user:"Mare", positive:true, text:"Граю ще з 1 дня і досі гра легендарна як завжди і була."},
+        {user:"Leapoldo", positive:false, text:"Краще дочекаюсь МК1 чи Текен 8."}
+      ]
+    }
+  },
+
+  Warframe: {
+    title: "Warframe",
+    price: "Безкоштовно",
+    buyText: "Додати до бібліотеки",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/64cb9deaae9055003fd76ba0f6df6b6fba38e808/header.jpg?t=1765508208",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/ss_e1d1bfebe225c85ea284ffecfe279c2695ddf3a5.1920x1080.jpg?t=1765508208",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/ss_0a541a8bf59e212870ea8d82260ac1b3ae2d0354.1920x1080.jpg?t=1765508208",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/ss_b06620c448c51d2bc5b71144a184da9ba37b703e.1920x1080.jpg?t=1765508208",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/230410/ss_2e4077f215eccde84171a4b8e0f2bc8a3264c776.1920x1080.jpg?t=1765508208"
+    ],
+    ratingAll: "87% позитивних | Дуже схвальні (655 540) За весь час.",
+    rating30: "90% позитивних | Дуже схвальні (5 061) За останні 30 дн.",
+    dev: "Digital Extremes",
+    pub: "Digital Extremes",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 23.03.2013",
+      "Однокористувацька гра | Мережева кооперативна гра"
+    ],
+    desc: `Пробудіться невпинним воїном і бийтеся разом із друзями проти ворогів у цьому безоплатному сюжетному мережевому бойовику.
+    Розпочніть боротьбу проти ворожих угруповань міжпланетної системи, слідуючи вказівкам таємничої Лотос. Розвивайте своїх ворфреймів,
+    збирайте зброярню руйнівної зброї та відкрийте свій справжній потенціал у великих відкритих світах.
+    Цей захопливий динамічний бойовик від третьої особи став визначним для жанру.
+    
+  Жанр: Бойовики, Рольові ігри, Онлайн`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel Core i7 860, Intel Core i5 750 або AMD FX-4100<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: сумісна з DirectX 11<br><br>
+Місце на диску: 50 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7 4300H, Intel Core i5 6300 / Ryzen 5 1300<br><br>
+Оперативна пам’ять: 6 GB<br><br>
+Відеокарта: сумісна з DirectX 11/12<br><br>
+Місце на диску: 50 GB<br>
+`,
+    reviews: {
+      scoreText: "90% Позитивні за останні 30 днів",
+      countText: "На основі 5 061 рецензій",
+      list: [
+        {user:"Xiton", positive:true, text:"Warframe — динамічний безкоштовний онлайн-шутер з сотнями видів зброї та унікальними ворфреймами. Гра вражає бойовою системою, дизайном та атмосферою, а також глибиною кастомізації."},
+        {user:"Franz", positive:false, text:"Не впевнений, що гра погана, але зовсім не для мене і точно не можу рекомендувати."},
+        {user:"Haither", positive:true, text:"В цілому, гра класна та захоплююча, пограти з друзями саме те. Полюбляєте фантастику та багатий вибір як зброї так і модифікацій? Це точно ваше!"}
+      ]
+    }
+  },
+
+  Frostpunk: {
+    title: "Frostpunk 2",
+    price: "840₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601580/header.jpg?t=1766132479",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601580/5fcef70d6bc626f4c0cfc74826c3a27125bd1376/ss_5fcef70d6bc626f4c0cfc74826c3a27125bd1376.1920x1080.jpg?t=1766132479",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601580/672ff9b24ea49282857a311e0c86c94d60c311fb/ss_672ff9b24ea49282857a311e0c86c94d60c311fb.1920x1080.jpg?t=1766132479",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601580/c6ef7c158fb7021f840c9ef00331265b9a34ecf1/ss_c6ef7c158fb7021f840c9ef00331265b9a34ecf1.1920x1080.jpg?t=1766132479",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1601580/ss_e49eb8f86431cf685d4123d8c2ab22710f74e5cd.1920x1080.jpg?t=1766132479"
+    ],
+    ratingAll: "74% позитивних | Дуже схвальні (19 083) За весь час.",
+    rating30: "65% позитивних | Схвальні (332) За останні 30 дн.",
+    dev: "11 bit studios",
+    pub: "11 bit studios",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 20.09.2024",
+      "Однокористувацька гра"
+    ],
+    desc: `Створюйте та розвивайте своє місто в соціальній грі на виживання через 30 років після апокаліптичної сніжної бурі, яка спустошила Землю.
+    У Frostpunk 2 ви зіткнетесь не лише з небезпеками безкінечної зими, а й з фракціями, які, сидячи у Раді, спостерігатимуть за кожним вашим кроком.
+    
+  Жанр: Виживання, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: AMD Ryzen 5 1600 / Intel Core i5-8400<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: AMD RX 550 4 GB / NVIDIA GTX 1050Ti 4 GB / INTEL ARC A310 4GB<br><br>
+DirectX: 12<br><br>
+Місце на диску: 30 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: AMD Ryzen 7 3700x / Intel Core i7-10700<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: AMD RX 5700 8 GB / NVIDIA 2060 Super RTX 8 GB / INTEL ARC A770 8GB<br><br>
+DirectX: 12<br><br>
+Місце на диску: 30 GB<br>
+`,
+    reviews: {
+      scoreText: "65% Позитивні за останні 30 днів",
+      countText: "На основі 332 рецензій",
+      list: [
+        {user:"Shkiper", positive:true, text:"Дуже сподобалось як розробники вирішили розвивати серію, багато нових цікавих механік, набагато більший масштаб та дуже багато нових можливостей дали отримати новий цікавий досвід і це було справді кайфово."},
+        {user:"Maxpain", positive:false, text:"Тільки для фанатів серії, тим кому не зайшла перша частина не зайде і ця."},
+        {user:"Diablic", positive:true, text:"Гра потужна, варіативність величезна. Чого варта варіативність лише одного проходження при дотримуванні однієї фракції. Один мінус - час летить непомітно, так що потрібно вмикати таймер або будильник. Інакше можна витратити весь вільний час і не помітити цього."}
+      ]
+    }
+  },
+
+  UntilDawn: {
+    title: "Until Dawn",
+    price: "2000₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2172010/header.jpg?t=1750959555",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2172010/ss_3f92c2868daa2d0af85171aef43ba10473127f30.1920x1080.jpg?t=1750959555",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2172010/ss_b7828fd25815ac37b3ae757cd7502ed0687b6da4.1920x1080.jpg?t=1750959555",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2172010/ss_fb40add47f672a71a172a935c0e0801f7b6dfc5d.1920x1080.jpg?t=1750959555",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2172010/ss_64f03bc4ada4e0190a3830fa02de8b4d1d4c147f.1920x1080.jpg?t=1750959555"
+    ],
+    ratingAll: "81% позитивних | Дуже схвальні (2 894) За весь час.",
+    rating30: "86% позитивних | Дуже схвальні (173) За останні 30 дн.",
+    dev: "Ballistic Moon",
+    pub: "PlayStation Publishing LLC",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 04.10.2024",
+      "Однокористувацька гра"
+    ],
+    desc: `Коли вісім друзів повертаються до хатини, де рік тому зникли дві їхні подруги, крижані кігті жаху починають стискатися,
+    а будинок у горах потроху перетворюється на страхіття, звідки немає виходу.
+    Подивіться страху в очі й дійте: від вас залежить, хто доживе до світанку в Until Dawn — класиці жанру хоррор, повністю переробленій та оновленій для ПК.
+
+Жанр: Хоррор, Сюжет`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7 4790K / AMD Ryzen 5 1500x<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 1660 / Radeon RX 470<br><br>
+DirectX: 12<br><br>
+Місце на диску: 70 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i5 8600 / AMD Ryzen 7 2700X<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: NVIDIA GeForce RTX 2060 / AMD Radeon RX 6600XT<br><br>
+DirectX: 12<br><br>
+Місце на диску: 70 GB<br>
+`,
+    reviews: {
+      scoreText: "86% Позитивні за останні 30 днів",
+      countText: "На основі 173 рецензій",
+      list: [
+        {user:"Joiner", positive:true, text:"Проходив оригінал на PS4 на платину, проте, все рівно вирішив придбати на ПК і зовсім не пожалкував!"},
+        {user:"Master", positive:true, text:"Шикарна гра, сюжет схожий з The Quarry, дуже зайшло. Рекомендував би до проходження 100%"},
+        {user:"Archee", positive:false, text:"Оптимізація гри, чесно кажучи, не найкраща :("}
+      ]
+    }
+  },
+
+  TheQuarry: {
+    title: "The Quarry",
+    price: "1500₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1577120/header.jpg?t=1730303267",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1577120/ss_79feecbc3c4097c516cbb0f11f928e29fac84b00.1920x1080.jpg?t=1730303267",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1577120/ss_94fe3b01d8e2a1f7a8f231523b03597405211889.1920x1080.jpg?t=1730303267",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1577120/ss_8e7720649353401c04224405c344efc558b267dc.1920x1080.jpg?t=1730303267",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1577120/ss_a3bffb7f9dfdb600e2f42bbe8acde38f77915b80.1920x1080.jpg?t=1730303267"
+    ],
+    ratingAll: "83% позитивних | Дуже схвальні (13 521) За весь час.",
+    rating30: "85% позитивних | Дуже схвальні (199) За останні 30 дн.",
+    dev: "Supermassive Games",
+    pub: "2K Games",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 10.06.2022",
+      "Однокористувацька гра | Мережева кооперативна гра"
+    ],
+    desc: `Після заходу сонця в останній день літнього табору підлітки-вожаті «Хекетс Куорі» влаштовують вечірку. Жодних дітей. Жодних дорослих. Жодних правил.
+    Але події швидко набирають зловісного обороту.
+    На них починають полювати переповнені жагою до крові мисливці, а також дещо більш жахливе — і ніч веселощів перетворюється на ніч жахів.
+    Замість веселих жартів і невимушеного флірту їм доведеться робити вибір між життям і смертю, а стосунки будуть зароджуватися або руйнуватися під тиском немислимих рішень.
+    Зіграйте за дев'ять вожатих у захопливій кінематографічній історії, де кожне рішення виплітає свою унікальну історію з заплутаного мережева можливостей.
+    Будь-який персонаж може стати зіркою – або не дожити до світанку.
+    Як розгорнеться ваша історія?
+
+Жанр: Хоррор, Сюжет`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: AMD FX-8350 / Intel i5-3570<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: Nvidia GTX 780 / Radeon RX 470<br><br>
+Місце на диску: 50 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: AMD Ryzen 7-3800XT / Intel i9-10900K<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: Nvidia RTX 2060 / Radeon RX 5700<br><br>
+Місце на диску: 50 GB<br>
+`,
+    reviews: {
+      scoreText: "85% Позитивні за останні 30 днів",
+      countText: "На основі 199 рецензій",
+      list: [
+        {user:"Famel", positive:true, text:"Чудова гра. Цікавий сюжет, не завжди логічні рішення і фрази персонажів з яких у вас буде час від часу горіти. Перший час вам буде сумно і трохи не вистачати розуміння, шо за дичина тут коїться і про шо вони всі розмовляють. Гра й атмосфера потихеньку затягують і через деякий час ви помітите що вже неможливо відірватись і хочется дізнатись щож буде далі."},
+        {user:"Beast", positive:false, text:"Я купив цю гру, запросив друзів і грав за персонажа який за всю гру ходив 2 хвилини. 8 годин нічого не робив..."},
+        {user:"Amadeus", positive:true, text:"Найкраща гра яку я пройшов за останній час, раджу пограти!"}
+      ]
+    }
+  },
+
+  Hades: {
+    title: "Hades II",
+    price: "460₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145350/91ac334a2c137d08968ccc0bc474a02579602100/header.jpg?t=1765831644",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145350/ss_c5b2753773b2eb58d3171391fa46c6bf006c9e97.1920x1080.jpg?t=1765831644",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145350/ss_c8d2b18451a2cc4d5b4fdd78ed84a5e64e051eac.1920x1080.jpg?t=1765831644",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145350/ss_b88cb7b48a86f07a7288bf37141f6558279f9bfc.1920x1080.jpg?t=1765831644",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1145350/ss_47e14ed55ac7f1bf9266b2cd5b3e4d9eae0ca54c.1920x1080.jpg?t=1765831644"
+    ],
+    ratingAll: "95% позитивних | Дуже схвальні (103 831) За весь час.",
+    rating30: "95% позитивних | Дуже схвальні (3 992) За останні 30 дн.",
+    dev: "Supergiant Games",
+    pub: "Supergiant Games",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 25.09.2025",
+      "Однокористувацька гра"
+    ],
+    desc: `Вітайте перший сиквел від студії Supergiant Games! Розробники залишають усе найкраще зі свого божественного rogue-like Hades,
+    щоб створити абсолютно нову та динамічну гру, яка подарує вам багато годин захопливої пригоди.
+    В основі сюжету лежить давньогрецька мітологія Підземного світу та її тісний зв’язок із зародженням відьомства.
+    
+  Жанр: Аркади, Бойовики, Інді, Рольові ігри`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Dual Core 2.4 GHz<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: GeForce GTX 950, Radeon R7 360, or Intel HD Graphics 630<br><br>
+Місце на диску: 10 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Quad Core 2.4ghz<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: GeForce RTX 2060, Radeon RX 5600 XT, or Intel Arc A580<br><br>
+Місце на диску: 10 GB<br>
+`,
+    reviews: {
+      scoreText: "95% Позитивні за останні 30 днів",
+      countText: "На основі 3 992 рецензій",
+      list: [
+        {user:"Justify", positive:true, text:"Як завжди, неймовірна глибина механік, купа фану, купа лору, все як я люблю."},
+        {user:"Beluga", positive:false, text:"Графіка - радість епілептика. Завдякі пласкій мальовці в бою все зливається в купу. Геймплей - жахливий."},
+        {user:"Farawell", positive:true, text:"Чудове продовження першої частини. Контенту у грі вже на даний момент багатенько. Всі локації та боси чудово виконані. Однозначно рекомендую!"}
+      ]
+    }
+  },
+
+  Rimworld: {
+    title: "RimWorld",
+    price: "470₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/294100/header.jpg?t=1762524275",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/294100/ss_8dfed1fd659a608f3556bfccaaf9ef49bf594222.1920x1080.jpg?t=1762524275",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/294100/ss_6bee92494e0c4dc53ad69000f2b71128c23629d6.1920x1080.jpg?t=1762524275",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/294100/1e3a2734b23daaa4eb60ea33dd87806aa65e0c8f/ss_1e3a2734b23daaa4eb60ea33dd87806aa65e0c8f.1920x1080.jpg?t=1762524275",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/294100/ss_d9204adad5c8236f000e0e53c2af798308195eff.1920x1080.jpg?t=1762524275"
+    ],
+    ratingAll: "97% позитивних | Дуже схвальні (196 695) За весь час.",
+    rating30: "96% позитивних | Дуже схвальні (2 142) За останні 30 дн.",
+    dev: "Ludeon Studios",
+    pub: "Ludeon Studios",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 17.10.2018",
+      "Однокористувацька гра"
+    ],
+    desc: `Науково-фантастичний симулятор колонії, керований розповідачем — розумним штучним інтелектом.
+    "RimWorld" розповість історію про трьох людей, які вижили після падіння космічного лайнера та побудували колонію на краю цивілізації, в кінці розвіданого Всесвіту.
+    
+  Жанр: Інді, Виживання, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7 x64<br><br>
+Процесор: Core 2 Duo<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта:  Intel HD Graphics 4000 or other shader model 4.0<br><br>
+Місце на диску: 1 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Core 2 Duo+<br><br>
+Оперативна пам’ять: 6 GB<br><br>
+Відеокарта: Intel HD Graphics 4000 or other shader model 4.0+<br><br>
+Місце на диску: 1 GB<br>
+`,
+    reviews: {
+      scoreText: "96% Позитивні за останні 30 днів",
+      countText: "На основі 2 142 рецензій",
+      list: [
+        {user:"Vintage", positive:true, text:"Ця гра вказує ваше справжнє обличчя, на що ви здатні піти заради виживання або веселощів. Часом вам самим ставатиме страшно від жахів, що ви створили."},
+        {user:"Muramasa", positive:true, text:"Чудовий симулятор колонії та без перебільшення ідейний спадкоємець славнозвісного dwarf fortress, хай і не настільки глибокий та різноманітний, але розробники впевнено рухаються у потрібну сторону, а мод-спільнота їм допомагає в цій нелегкій справі."},
+        {user:"Yomaster", positive:true, text:"Чудова гра яка приносить унікальний досвід та чудові враження та емоції."}
+      ]
+    }
+  },
+
+    Far: {
+    title: "FAR: Lone Sails",
+    price: "230₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/609320/header.jpg?t=1769095038",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/609320/ss_f6ca3dd20cb0d266fad1cd6176e554e9c774d814.1920x1080.jpg?t=1769095038",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/609320/ss_0f10e3d8f949b2be978605c9abababc3a587e961.1920x1080.jpg?t=1769095038",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/609320/ss_507c97eb2ed82ab564297fe206952c89936e23f2.1920x1080.jpg?t=1769095038",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/609320/ss_307a2a7525551fe71721cee5f0d12b3cf45a37f7.1920x1080.jpg?t=1769095038"
+    ],
+    ratingAll: "95% позитивних | Дуже схвальні (23 061) За весь час.",
+    rating30: "96% позитивних | Дуже схвальні (263) За останні 30 дн.",
+    dev: "Okomotive",
+    pub: "Okomotive",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 17.05.2018",
+      "Однокористувацька гра"
+    ],
+    desc: `Перетніть дно висохлого моря, що вкрите залишками помираючої цивілізації.
+    Підтримуйте рух свого унікального судна, долайте численні перешкоди та важкі погодні умови. Як далеко ви просунетеся? Що знайдете?
+    
+  Жанр: Пригоди, Інді, Сюжет`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7 x64<br><br>
+Процесор: Intel Core 2 Quad Q6600 @ 2.4 GHz, AMD FX 8120 @ 3.1 GHz<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: NVIDIA GTX 460 / 650m, AMD Radeon HD6570<br><br>
+DirectX: 11<br><br>
+Місце на диску: 3 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel i7 920 @ 2.7 GHz, AMD Phenom II 945 @ 3.0 GHz<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: NVIDIA GTX 680, AMD Radeon R9-280X<br><br>
+DirectX: 11<br><br>
+Місце на диску: 3 GB<br>
+`,
+    reviews: {
+      scoreText: "96% Позитивні за останні 30 днів",
+      countText: "На основі 263 рецензій",
+      list: [
+        {user:"Hazy", positive:true, text:"Досить проста але візуально вражаюча подорож! Окреме дякую за українську локалізацію! Мені сподобалась механіка гри і сетінг. Як для інді гри це прекрасний результат! Хотілося звісно трішки більше поринути в світ гри і дізнатися що стало причиною занепаду механізованої цивілізації, проте доступні лише візуальні натяки. Раджу пограти!"},
+        {user:"Starves", positive:true, text:"Цікава, антуражна, атмосферна, з чарівними пейзажами, гра про подорож кочегара на поїзді закинутим дном висохлого океану, з залишками, напевно, ніколи нікому невідомої цивілізації."},
+        {user:"Voxox", positive:false, text:"Для мене ця гра повне розчарування. Я не побачив в ній, ні цікаво сюжету, ні атмосфери, ні геймплею."}
+      ]
+    }
+  },
+
+  Teardown: {
+    title: "Teardown",
+    price: "650₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1167630/header.jpg?t=1763977691",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1167630/ss_9fd3e8de605efc42e29ba98f72432cb78a15d7ac.1920x1080.jpg?t=1763977691",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1167630/ss_50ddd808ae0793dd111ff97d52c82435e1a208ae.1920x1080.jpg?t=1763977691",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1167630/ss_b27b34be4df67359cda370e9a9372ea229ef2932.1920x1080.jpg?t=1763977691",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1167630/ss_beac47def3673b7ce3423584e512caa67bf2d69e.1920x1080.jpg?t=1763977691"
+    ],
+    ratingAll: "95% позитивних | Дуже схвальні (112 705) За весь час.",
+    rating30: "96% позитивних | Дуже схвальні (2 553) За останні 30 дн.",
+    dev: "Tuxedo Labs",
+    pub: "Tuxedo Labs",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 21.04.2022",
+      "Однокористувацька гра"
+    ],
+    desc: `Сплануйте бездоганне пограбування в готовому до руйнування воксельному світі.
+    Пробивайте стіни вибухівкою чи авто. Складайте об’єкти в стоси, щоби піднятися вище.
+    Використовуйте оточення як заманеться для отримання переваги.
+
+  Жанр: Бойовики, Пригоди, Інді, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Quad Core CPU<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 1060 or similar. 3 Gb VRAM.<br><br>
+Місце на диску: 4 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i7 or better<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 1080 or similar. 8 Gb VRAM.<br><br>
+Місце на диску: 4 GB<br>
+`,
+    reviews: {
+      scoreText: "96% Позитивні за останні 30 днів",
+      countText: "На основі 2 553 рецензій",
+      list: [
+        {user:"Vinchek", positive:true, text:"Просто бомбезна гра! Якщо ви шукаєте гру де можна руйнувати все що забажаєш то ця гра вам точно підійде."},
+        {user:"Fissak", positive:true, text:"Ніколи не бачив ігор із настільки чудовою механікою руйнувань. Чудова графіка у поєднанні відмінної фізики та цікавим геймплеєм змушують мене проводити час у цій грі щодня."},
+        {user:"Ituvtu", positive:false, text:"Чесно кажучи, у грі нема чим займатись. Пройшовши декілька сюжетних місій, а потім спробувавши пісочницю, я і гадки не маю, чим займатись далі((("}
+      ]
+    }
+  },
+
+  Darktide: {
+    title: "Warhammer 40,000: Darktide",
+    price: "760₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1361210/f07ebcb73a34112ac61c54608b1f1ded7e45eb8a/header.jpg?t=1765362596",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1361210/ss_1e057a298746ba08f0e9e5f102b5625d577ea389.1920x1080.jpg?t=1765362596",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1361210/ss_d932c7e464f32ab6d1380091d1752ab6b3c4b45b.1920x1080.jpg?t=1765362596",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1361210/ss_eea5f1aae5032babe3f1cdbd0c8e32272f4787c5.1920x1080.jpg?t=1765362596",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1361210/ss_bb7caeef3cb174a55f6ba87b2fbeb9eb53db2dc9.1920x1080.jpg?t=1765362596"
+    ],
+    ratingAll: "71% позитивних | Дуже схвальні (100 757) За весь час.",
+    rating30: "70% позитивних | Дуже схвальні (1 492) За останні 30 дн.",
+    dev: "Fatshark",
+    pub: "Fatshark",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 30.11.2022",
+      "Мережева кооперативна гра"
+    ],
+    desc: `Відвоюйте місто Терціум в орд кровожерливих ворогів у цьому напруженому й жорстокому екшн-шутері.
+    Warhammer 40,000: Darktide — нова кооперативна гра від відзначеної нагородами команди творців серії Vermintide.
+    У нетрях вулика проростають зерна погані, що загрожують перетворитися на нищівну хвилю мороку. Нова таємнича й зловісна сила прагне захопити контроль над усім містом.
+    Паде Терціум — повстануть відторгнені. For Emperor!
+  Жанр: Бойовики, Пригоди, Рольові ігри, Онлайн`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel i5-6600 OR AMD Ryzen 2400G<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 970 OR AMD Radeon RX 570<br><br>
+DirectX: 12<br><br>
+Місце на диску: 72 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel i7-9700K OR AMD Ryzen 5 3600<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: NVIDIA GeForce RTX 3060 / RTX 2060 OR AMD Radeon RX 5700 XT<br><br>
+DirectX: 12<br><br>
+Місце на диску: 72 GB<br>
+`,
+    reviews: {
+      scoreText: "70% Позитивні за останні 30 днів",
+      countText: "На основі 1 492 рецензій",
+      list: [
+        {user:"Paladin", positive:true, text:"Загалом файна кооперативна рубанка з друзями."},
+        {user:"Vergil", positive:true, text:"Крутий атмосферний шутер, фанам вархаммера - обов'язково треба спробувати."},
+        {user:"Fenomen", positive:false, text:"Абсолютно жахлива оптимізація."}
+      ]
+    }
+  },
+
+    Cult: {
+    title: "Cult of the Lamb",
+    price: "500₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1313140/19f32bb477a6e9d058e05193b4e282149bd70644/header.jpg?t=1769105918",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1313140/ss_f4ca3fd0416c3f41c57bc3809bb45f8f20e684ec.1920x1080.jpg?t=1769105918",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1313140/ss_3ace1b2f742ae552ea3b44784ff64c5bad987de5.1920x1080.jpg?t=1769105918",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1313140/ss_90f238e89ab4c4500d3baee273419bd23f8e5f84.1920x1080.jpg?t=1769105918",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1313140/ss_5091be0f7bb00dbe49499c57535725a397a3db2d.1920x1080.jpg?t=1769105918"
+    ],
+    ratingAll: "95% позитивних | Дуже схвальні (99 348) За весь час.",
+    rating30: "96% позитивних | Дуже схвальні (2 619) За останні 30 дн.",
+    dev: "Massive Monster",
+    pub: "Devolver Digital",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 11.08.2022",
+      "Однокористувацька гра"
+    ],
+    desc: `У Cult of the Lamb гравці опиняться в ролі одержимого ягняти, врятованого від загибелі моторошним незнайомцем,
+    і щоб оплатити цей борг, їм доведеться знайти йому вірних послідовників.
+    Заснуйте свій культ в землях лжепророків, здійснюйте вилазки в різноманітні таємничі регіони,
+    створіть віддану спільноту лісових послiдовникiв та поширюйте своє Слово, щоб зробити цю спільноту єдиним істинним культом. На вас чекає багато пригод!
+  Жанр: Бойовики, Пригоди, Інді, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7/8/10/11 x64<br><br>
+Процесор: Intel Core i3-3240 or AMD FX-4300<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: GeForce GTX 560 Ti or Radeon HD 7750<br><br>
+Місце на диску: 4 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i5-3470<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: GeForce GTX 1050 or Radeon R9 380<br><br>
+Місце на диску: 4 GB<br>
+`,
+    reviews: {
+      scoreText: "96% Позитивні за останні 30 днів",
+      countText: "На основі 2 619 рецензій",
+      list: [
+        {user:"Solid_Edward", positive:true, text:"Чудова і дуже цікава гра. Це рогалік і симулятор разом. Фаза рогаліка дуже нагадує Hades."},
+        {user:"Mord", positive:true, text:"Ця гра одразу ж приглянулась мені своїм стилем, виглядає вона дуже своєрідно красивою. Я пройшов її на одному диханні, вона мене затягнула з головою, тому я усім рекомендую її до ознайомлення."},
+        {user:"Intenmeter", positive:false, text:"Очікував набагато більшого. Майже ніякого різноманіття зброї, нудна магія, нудні артефакти. Абсолютно непотрібні винагороди у вигляді декорацій до бази."}
+      ]
+    }
+  },
+  
+  Rust: {
+    title: "Rust",
+    price: "700₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/header.jpg?t=1761667247",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/ss_1c2d0d1eefee54f0c67626c74eb21699bbb0ef52.1920x1080.jpg?t=1761667247",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/ss_827f1bb38361eb3f7de91cff9be5b7176a05a9ac.1920x1080.jpg?t=1761667247",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/ss_0e646f1a70e5cb8eed00efef8adb9579d40d5b2e.1920x1080.jpg?t=1761667247",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/252490/ss_3834344f4f347f133a70096113d71ab3c5a7d587.1920x1080.jpg?t=1761667247"
+    ],
+    ratingAll: "87% позитивних | Дуже схвальні (1 100 184) За весь час.",
+    rating30: "86% позитивних | Дуже схвальні (13 904) За останні 30 дн.",
+    dev: "Facepunch Studios",
+    pub: "Facepunch Studios",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 08.02.2018",
+      "Гравець проти гравця в мережі | Мережева кооперативна гра"
+    ],
+    desc: `Єдина ціль у грі Rust — вижити. Все прагне вашої смерті — дика природа острова,
+    інші жителі, оточення та інші вцілілі. Робіть усе можливе, щоб пережити ще одну ніч.
+    
+  Жанр: Бойовики, Пригоди, Інді, Онлайн`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 11 x64<br><br>
+Процесор: AMD Ryzen 5 1400 or Intel Core i5-6600<br><br>
+Оперативна пам’ять: 12 GB<br><br>
+Відеокарта: AMD Radeon RX 470, NVIDIA GeForce GTX 1060, Intel Arc A580<br><br>
+DirectX: 11<br><br>
+Місце на диску: 45 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 11 x64<br><br>
+Процесор: AMD Ryzen 7 3700X or Intel Core i7-6700K<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: AMD Radeon RX 6600XT, NVIDIA GeForce RTX 3060, Intel Arc B580<br><br>
+DirectX: 12<br><br>
+Місце на диску: 45 GB<br>
+`,
+    reviews: {
+      scoreText: "86% Позитивні за останні 30 днів",
+      countText: "На основі 13 904 рецензій",
+      list: [
+        {user:"Faust", positive:true, text:"Пішов спати-зарейдили. пішов їсти-зарейдили. пішов в магазин за кока колою-зарейдили.Класна гра!!!"},
+        {user:"Sander", positive:true, text:"Ігра чудова, але із-за неї забудеш про особисте життя."},
+        {user:"Fox", positive:false, text:"Гра прикольно зроблена та місцями цікава. Але на мою особисту думку вона потребує дуже багато часу, який можна витратити на щось більш достойне уваги."}
+      ]
+    }
+  },
+
+  DeadCells: {
+    title: "Dead Cells",
+    price: "330₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/588650/header.jpg?t=1761123066",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/588650/ss_21c61aca6a66745a2abb3f72b93553398fc7fe32.1920x1080.jpg?t=1761123066",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/588650/ss_6f305b9603c17d31ddcbda4c73add319bf910a41.1920x1080.jpg?t=1761123066",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/588650/ss_b4d8d567f7bdcccc7195ca71d69f98a78575b96c.1920x1080.jpg?t=1761123066",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/588650/ss_65dde6f056018945351e18f55c3481fa2478547b.1920x1080.jpg?t=1761123066"
+    ],
+    ratingAll: "97% позитивних | Дуже схвальні (150 807) За весь час.",
+    rating30: "95% позитивних | Дуже схвальні (1 072) За останні 30 дн.",
+    dev: "Motion Twin",
+    pub: "Motion Twin",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 07.08.2018",
+      "Однокористувацька гра"
+    ],
+    desc: `Dead Cells — це екшн-платформер і метроїдванія з елементами рогалика.
+    Досліджуйте великий замок, який постійно змінюється... Якщо подолаєте його охоронців.
+    Без збережень. Вбивайте, вмирайте, набувайте досвіду та враховуйте його на повторах.
+  Жанр: Бойовики, Пригоди, Аркади, Інді`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7+ x64<br><br>
+Процесор: Intel i5+<br><br>
+Оперативна пам’ять: 2 GB<br><br>
+Відеокарта: Nvidia 450 GTX / Radeon HD 5750<br><br>
+DirectX: 9+<br><br>
+Місце на диску: 500 MB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel i5+<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: Nvidia GTX 460 / Radeon HD 7800<br><br>
+DirectX: 9.1+<br><br>
+Місце на диску: 500 MB<br>
+`,
+    reviews: {
+      scoreText: "95% Позитивні за останні 30 днів",
+      countText: "На основі 1 072 рецензій",
+      list: [
+        {user:"Leorio", positive:true, text:"Гра варта своїх грошей, але раджу одразу брати із доповненнями."},
+        {user:"Marble", positive:true, text:"Одна з найкращих ігор у своєму жанрі. Приголомшливий рівень реграбельності. Це якраз той випадок, коли можна сміливо твердити, що гра must have!"},
+        {user:"Limbo", positive:false, text:"Гра для трайхардів без права на помилку."}
+      ]
+    }
+  },
+
+  RainbowSixSiegeX: {
+    title: "Tom Clancy's Rainbow Six Siege X",
+    price: "Безкоштовно",
+    buyText: "Додати до бібліотеки",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/359550/dc3570350a99ecc4dd77f83fad47787f7eca89f7/header.jpg?t=1766176190",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/359550/1ee529c1c835164b7a2949a8b52ce79016d45690/ss_1ee529c1c835164b7a2949a8b52ce79016d45690.1920x1080.jpg?t=1766176190",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/359550/8363519296edec1c056176f25e20767da3e6e853/ss_8363519296edec1c056176f25e20767da3e6e853.1920x1080.jpg?t=1766176190",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/359550/7775eaf638491a92f348f2add394828deb77c125/ss_7775eaf638491a92f348f2add394828deb77c125.1920x1080.jpg?t=1766176190",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/359550/a53bff65f0f16fb38967d850e9fd0b0f9f8fa8d3/ss_a53bff65f0f16fb38967d850e9fd0b0f9f8fa8d3.1920x1080.jpg?t=1766176190"
+    ],
+    ratingAll: "82% позитивних | Дуже схвальні (1 476 419) За весь час.",
+    rating30: "74% позитивних | Дуже схвальні (10 798) За останні 30 дн.",
+    dev: "Ubisoft Montreal",
+    pub: "Ubisoft",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 01.12.2015",
+      "Гравець проти гравця в мережі | Мережева кооперативна гра"
+    ],
+    desc: `Беріть участь у напружених боях 6х6 на найбільшій карті в «Облозі», де мета кожної команди – захопити сектори супротивника та захистити при цьому власні. Пробийтеся на ворожу базу й здобудьте перемогу.
+    Виберіть оперативника з вибраного списку атакувальників і захисників, бийтеся пліч-о-пліч з побратимами, розблоковуйте нові тактичні можливості.
+    Під час відродження вибирайте оперативника і стратегію, які будуть найбільш корисні за поточної ситуації на полі бою, або вирушайте до Нейтрального сектора,
+    де можна отримати ризиковані призначення з великими нагородами, та заробляйте бонуси, які можуть миттєво змінити розстановку сил.
+    
+  Жанр: Бойовики, Онлайн`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: AMD Ryzen 3 3100 / Intel i3-8100<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: Nvidia GTX 1650 4GB / AMD RX 5500XT 4GB / Intel ARC A380 6GB<br><br>
+DirectX: 12<br><br>
+Місце на диску: 65 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: AMD Ryzen5 3600 / Intel i5-10400<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: NVIDIA RTX 2060 6GB / AMD RX 6600 8GB<br><br>
+DirectX: 12<br><br>
+Місце на диску: 65 GB<br>
+`,
+    reviews: {
+      scoreText: "74% Позитивні за останні 30 днів",
+      countText: "На основі 10 798 рецензій",
+      list: [
+        {user:"Sergio", positive:true, text:"Цікава гра, багато персонажів, з друзями грати по кайфу!"},
+        {user:"Vakorde", positive:false, text:"Хотів спробувати гру, а воно пише ключ активації не вірний."},
+        {user:"Pontus", positive:true, text:"Гра супер! Гра - для тих хто любить і вміє думати! Якщо ви вмієте це робити, ласкаво просимо! Маєте друзів? Кличте їх грати разом, атже разом завжди веселіше!"}
+      ]
+    }
+  },
+
+  Broforce: {
+    title: "Broforce",
+    price: "325₴",
+    buyText: "Купити",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/274190/header.jpg?t=1764247760",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/274190/ss_bda2885ff80a5e383e287270680b0d9d420685ef.1920x1080.jpg?t=1764247760",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/274190/ss_d11ef17ce48cea603c0305029e7c4b5c4be70a27.1920x1080.jpg?t=1764247760",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/274190/ss_dd03107478a9382d5e42a12fe4e5ca0ac80c4894.1920x1080.jpg?t=1764247760",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/274190/ss_ad7be0831ee576da785a978793a367b8ea1b8a97.1920x1080.jpg?t=1764247760"
+    ],
+    ratingAll: "97% позитивних | Дуже схвальні (48 806) За весь час.",
+    rating30: "96% позитивних | Дуже схвальні (184) За останні 30 дн.",
+    dev: "Free Lives",
+    pub: "Devolver Digital",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 15.10.2015",
+      "Однокористувацька гра | Мережева кооперативна гра"
+    ],
+    desc: `Коли світу погрожує зло, на допомогу приходить Broforce («Брофорс») — не дуже багата, але дуже військова організація, що вирішує справи виключно за допомогою надмірної сили.
+    Збирайте команду до чотирьох гравців, обирайте з десятків різних bros (бро) й браво знищуйте ворожих терористів, що зазіхають на наш спосіб життя.
+    Пробивайте шлях безліччю унікальної зброї й влаштовуйте неймовірні ланцюгові реакції з вогнем, напалмом і кінцівками заради свободи.
+
+  Жанр: Бойовики, Пригоди, Аркади, Інді`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 7/8/10/11 x64<br><br>
+Процесор: Intel Core Duo<br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: OpenGL 3.0<br><br>
+Місце на диску: 1.3 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel Core i3-3240 <br><br>
+Оперативна пам’ять: 4 GB<br><br>
+Відеокарта: GeForce GTX 260<br><br>
+Місце на диску: 1.3 GB<br>
+`,
+    reviews: {
+      scoreText: "96% Позитивні за останні 30 днів",
+      countText: "На основі 184 рецензій",
+      list: [
+        {user:"Vorona", positive:true, text:"Якщо граєш з друзями, то смерть у грі виглядає дуже кумедно."},
+        {user:"Golfimbul", positive:true, text:"Якщо тобі хочеться принести свободу, рівність і демократію у варварські країни, тоді ця гра для тебе. 10 Чаків Норрісів з 10!"},
+        {user:"Loki", positive:false, text:"Хардконрий олдскульний платформер, що не прощає помилок."}
+      ]
+    }
+  },
+
+  ReadyOrNot: {
+    title: "Ready or Not",
+    price: "625₴",
+    buyText: "Купити",
+    cover: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1144200/header.jpg?t=1753984272",
+    mainShot: "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1144200/8003fd0791fbaaef24bb3da768603eca92449a4d/ss_8003fd0791fbaaef24bb3da768603eca92449a4d.1920x1080.jpg?t=1753984272",
+    thumbs: [
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1144200/88aec4ee3fba8860070370032495e0c9ff87a607/ss_88aec4ee3fba8860070370032495e0c9ff87a607.1920x1080.jpg?t=1753984272",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1144200/bbcb0ea9c2d360a3492af71ce3a4f07df2eb5b6e/ss_bbcb0ea9c2d360a3492af71ce3a4f07df2eb5b6e.1920x1080.jpg?t=1753984272",
+      "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1144200/ss_f0e0b11fa6f1bf6b436f1e17cd3f72f956180405.1920x1080.jpg?t=1753984272"
+    ],
+    ratingAll: "77% позитивних | Дуже схвальні (240 733) За весь час.",
+    rating30: "86% позитивних | Дуже схвальні (2 769) За останні 30 дн.",
+    dev: "VOID Interactive",
+    pub: "VOID Interactive",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 13.12.2023",
+      "Однокористувацька гра | Мережева кооперативна гра"
+    ],
+    desc: `Лос-Суеньос — Департамент поліції повідомляє про значний сплеск злочинності в районі Лос-Суеньос.
+    Групи SWAT відправлено запобігти сценаріям підвищеного ризику, зокрема захопленням заручників, загрозам вибуху бомби, забарикадованим підозрюваним тощо.
+    
+  Жанр: Бойовики, Онлайн, Пригоди`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: Intel Core i5-4430 / AMD FX-6300<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: NVIDIA GeForce GTX 960 2GB / AMD Radeon R7 370 2GB<br><br>
+DirectX: 11<br><br>
+Місце на диску: 60 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 10/11 x64<br><br>
+Процесор: AMD Ryzen 5-1600 / Intel Core i5-7600K<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: Nvidia GTX 1060 6GB<br><br>
+DirectX: 11<br><br>
+Місце на диску: 60 GB<br>
+`,
+    reviews: {
+      scoreText: "86% Позитивні за останні 30 днів",
+      countText: "На основі 2 769 рецензій",
+      list: [
+        {user:"Svern", positive:true, text:"Найкраща гра, щоб показати те що робота в команді це і є шлях до перемоги."},
+        {user:"Dekim", positive:false, text:"Зробіть нормальний робочий мультиплеєр."},
+        {user:"Donaldo", positive:true, text:"Найбільш реалістичний симулятор спецназу."}
+      ]
+    }
+  },  
+
+  MonsterTrain2: {
+    title: "Monster Train 2",
+    price: "515₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2742830/dd05c7cdc22cd2bac76e8f38562a9736ec084c30/header_alt_assets_3.jpg?t=1770191399",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2742830/c7d7b211276aa8e30caea22789786daf0ad118e1/ss_c7d7b211276aa8e30caea22789786daf0ad118e1.1920x1080.jpg?t=1770191399",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2742830/c5a5a06f35b12fcc88bc585c41ade318c31de60d/ss_c5a5a06f35b12fcc88bc585c41ade318c31de60d.1920x1080.jpg?t=1770191399",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2742830/7130df5da4beb995724f8209ff986704730b51ee/ss_7130df5da4beb995724f8209ff986704730b51ee.1920x1080.jpg?t=1770191399",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2742830/67f81183554f51e6d41f9fa0ddc87ebca46ee624/ss_67f81183554f51e6d41f9fa0ddc87ebca46ee624.1920x1080.jpg?t=1770191399"
+    ],
+    ratingAll: "95% позитивних | Дуже схвальні (7 393) За весь час.",
+    rating30: "94% позитивних | Дуже схвальні (253) За останні 30 дн.",
+    dev: "Shiny Shoe",
+    pub: "Big Fan Games",
+    features: [
+      "Мови:", "English",
+      "Italian", "Spanish",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 21.05.2025",
+      "Однокористувацька гра"
+    ],
+    desc: `Могутні істоти, відомі як титани (Titans), захопили владу над Раєм.
+    Колишні ангели й демони створили тимчасовий альянс, щоб разом протистояти спільному ворогу.
+    Очольте ці клани й вирушайте в подорож на новозбудованих потягах крізь Пекло (Hell), Рай (Heaven) та Безодню (Abyss), щоб здолати титанів, перш ніж вони знищать світ.
+    За брамою панує хаос!
+    
+  Жанр: Інді, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: Intel Core i5-4670K / AMD FX-4350<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: GeForce GTX 760 / Radeon R7 260X<br><br>
+DirectX: 11<br><br>
+Місце на диску: 3 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 11 x64<br><br>
+Процесор: Intel Core i5-9600 / AMD Ryzen 5 1600<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: GeForce GTX 1080 / Radeon RX 5700<br><br>
+DirectX: 12<br><br>
+Місце на диску: 3 GB<br>
+`,
+    reviews: {
+      scoreText: "94% Позитивні за останні 30 днів",
+      countText: "На основі 253 рецензій",
+      list: [
+        {user:"Vano", positive:true, text:"Дуже варіативна гра. Різні комбінації кланів і механіка поверхів роблять своє діло."},
+        {user:"Ultras", positive:false, text:"Швидко набридла, за фулпрайс не рекомендую."},
+        {user:"Dior", positive:true, text:"Багато нових механік і ускладнень. Тепер треба придумувати комлексніші стратегії і їх різноманіття дуже зросло. Друга частина стала складнішою з більшою к-кістю контенту."}
+      ]
+    }
+  },
+  
+  DarkestDungeonII: {
+    title: "Darkest Dungeon II",
+    price: "800₴",
+    buyText: "Купити",
+    cover: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1940340/header.jpg?t=1759351183",
+    mainShot: "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1940340/ss_19b4a3415f5c4167121cb2acd12b7d6d90555e2c.1920x1080.jpg?t=1759351183",
+    thumbs: [
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1940340/ss_bc4c7aec5704ed4108a181ec9a790c3fea4a9f12.1920x1080.jpg?t=1759351183",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1940340/ss_d9ace881030b51b9f405198111df391f4573d092.1920x1080.jpg?t=1759351183",
+      "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1940340/ss_ae99a05123bc28caa5c4968ec62b08f7a09f0607.1920x1080.jpg?t=1759351183"
+    ],
+    ratingAll: "75% позитивних | Дуже схвальні (22 278) За весь час.",
+    rating30: "71% позитивних | Дуже схвальні (310) За останні 30 дн.",
+    dev: "Red Hook Studios",
+    pub: "Red Hook Studios",
+    features: [
+      "Мови:", "Українська",
+      "English", "Spanish",
+      "Italian", "Chinese",
+      "French", "Japanese",
+      "German", "Polish",
+      "Вихід: 08.05.2023",
+      "Однокористувацька гра"
+    ],
+    desc: `Darkest Dungeon II — мандрівна гра, у якій прокляті вирушають у похід.
+    Наберіть групу, оснастіть диліжанс і вирушайте в останній похід по виснаженій землі, щоб запобігти апокаліпсису.
+    Однак найбільші небезпеки, які на вас чекають, можуть походити зсередини...
+
+  Жанр: Інді, Рольові ігри, Стратегії`,
+    minSpec: `
+<b>Мінімальні:</b><br><br>
+ОС: Windows 10 x64<br><br>
+Процесор: AMD Athlon X4 / Intel Core i5 4460<br><br>
+Оперативна пам’ять: 8 GB<br><br>
+Відеокарта: Nvidia GTX 950 / AMD R7 370<br><br>
+Місце на диску: 6 GB<br>
+`,
+    recSpec: `
+<b>Рекомендовані:</b><br><br>
+ОС: Windows 11 x64<br><br>
+Процесор: Intel Core i7-6700K<br><br>
+Оперативна пам’ять: 16 GB<br><br>
+Відеокарта: Nvidia GTX 1060<br><br>
+Місце на диску: 6 GB<br>
+`,
+    reviews: {
+      scoreText: "71% Позитивні за останні 30 днів",
+      countText: "На основі 310 рецензій",
+      list: [
+        {user:"Herald", positive:true, text:"Гра сильно змінилася з першої частини, більше у сторону роуглайка, однак і грінду стало значно менше, партії не дуже довгі, комусь це може здатись погіршенням, однак мені дуже сподобався новий концепт."},
+        {user:"Electrode", positive:true, text:"Неймовірна гра в похмурому приємному стилі, жодних мінусів."},
+        {user:"Andre", positive:false, text:"Не сподобалась гра. Якась деградація в області грінду."}
+      ]
+    }
+  },
+
+};
+
+const id = new URLSearchParams(location.search).get("id") || "wot";
+const game = GAMES[id] || GAMES["wot"];
+
+document.title = game.title + " | GEAR";
+document.getElementById("game-title").textContent = game.title;
+
+document.getElementById("game-price").textContent = game.price;
+(function applySavedDiscount(){
+  if(game.price === "Безкоштовно") return;
+
+  const raw = sessionStorage.getItem("gear_discounts");
+  if(!raw) return;
+
+  let discounts;
+  try{
+    discounts = JSON.parse(raw);
+  }catch(e){ return; }
+
+  const discount = discounts[id];
+  if(!discount) return;
+
+  const priceNum = parseInt(game.price.replace("₴",""), 10);
+  if(isNaN(priceNum)) return;
+
+  const newPrice = Math.round(priceNum * (100 - discount) / 100);
+
+  const priceEl = document.getElementById("game-price");
+  priceEl.innerHTML = `
+    <span style="text-decoration:line-through;color:#888;font-size:16px;margin-right:8px">
+      ${priceNum}₴
+    </span>
+    <span style="color:#ffd700;font-weight:900">
+      ${newPrice}₴
+    </span>
+  `;
+
+  const buyBox = document.querySelector(".buy");
+  const badge = document.createElement("div");
+  badge.textContent = `-${discount}%`;
+  badge.style.cssText = `
+    position:absolute;
+    top:12px;
+    left:12px;
+    background:#4caf50;
+    color:#000;
+    font-weight:900;
+    padding:6px 10px;
+    border-radius:2px;
+    z-index:10;
+  `;
+  buyBox.appendChild(badge);
+})();
+
+const buyBtn = document.getElementById("buy-btn");
+const library = getLibrary();
+
+if(library.includes(id)){
+  buyBtn.textContent = "ГРУ ДОДАНО ДО БІБЛІОТЕКИ";
+  buyBtn.disabled = true;
+  buyBtn.style.opacity = "0.6";
+  buyBtn.style.cursor = "default";
+}else{
+  buyBtn.textContent = game.buyText || "Купити";
+
+  buyBtn.addEventListener("click", ()=>{
+    addToLibrary(id);
+
+    buyBtn.textContent = "ГРУ ДОДАНО ДО БІБЛІОТЕКИ";
+    buyBtn.disabled = true;
+    buyBtn.style.opacity = "0.6";
+    buyBtn.style.cursor = "default";
+
+    alert("Гру додано до бібліотеки");
+  });
+}
+
+
+document.getElementById("rating-all").textContent = game.ratingAll || "";
+document.getElementById("rating-30").textContent = game.rating30 || "";
+
+document.getElementById("dev").textContent = game.dev || "";
+document.getElementById("pub").textContent = game.pub || "";
+
+const descEl = document.getElementById("desc");
+const rawDesc = game.desc || "";
+
+let descOnly = rawDesc;
+let genreOnly = "";
+
+const idx = rawDesc.lastIndexOf("Жанр:");
+if(idx !== -1){
+  descOnly = rawDesc.slice(0, idx).trim();
+  genreOnly = rawDesc.slice(idx).trim();
+}
+
+descEl.textContent = descOnly;
+
+let genreEl = document.getElementById("genre-line");
+if(genreEl) genreEl.remove();
+
+if(genreOnly){
+  genreEl = document.createElement("div");
+  genreEl.id = "genre-line";
+  genreEl.className = "genre-line";
+
+  const genreText = genreOnly.replace(/^Жанр:\s*/i, "").trim();
+  genreEl.innerHTML = `<b>Жанр:</b> ${genreText}`;
+
+  descEl.insertAdjacentElement("afterend", genreEl);
+}
+document.getElementById("minSpec").innerHTML = game.minSpec || "";
+document.getElementById("recSpec").innerHTML = game.recSpec || "";
+
+document.getElementById("buyImage").style.backgroundImage = game.cover ? `url("${game.cover}")` : "";
+document.getElementById("mainImage").style.backgroundImage = game.mainShot ? `url("${game.mainShot}")` : "";
+
+const thumbEls = document.querySelectorAll(".gallery-thumbs .thumb");
+thumbEls.forEach((el, i) => {
+  const url = (game.thumbs && game.thumbs[i]) ? game.thumbs[i] : "";
+  el.style.backgroundImage = url ? `url("${url}")` : "";
+});
+
+const featuresWrap = document.getElementById("features");
+featuresWrap.innerHTML = "";
+(game.features || []).forEach(txt=>{
+  const div = document.createElement("div");
+  div.textContent = txt;
+  featuresWrap.appendChild(div);
+});
+
+const reviewsBlock = document.getElementById("reviews-block");
+if(game.reviews && game.reviews.list && game.reviews.list.length){
+  document.getElementById("review-score").textContent = game.reviews.scoreText || "";
+  document.getElementById("review-count").textContent = game.reviews.countText || "";
+
+  const list = document.getElementById("review-list");
+  list.innerHTML = "";
+  game.reviews.list.forEach(r=>{
+    const item = document.createElement("div");
+    item.className = "review";
+    item.innerHTML = `
+      <div class="review-top">
+        <span class="review-user">${r.user}</span>
+        <span class="review-status ${r.positive ? "positive" : "negative"}">
+          ${r.positive ? "👍 Рекомендує" : "👎 Не рекомендує"}
+        </span>
+      </div>
+      <div class="review-text">${r.text}</div>
+    `;
+    list.appendChild(item);
+  });
+}else{
+  reviewsBlock.style.display = "none";
+}
+
+function getQueue(){
+  try{
+    const raw = localStorage.getItem("gear_queue");
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function getPos(){ return parseInt(localStorage.getItem("gear_queue_pos") || "0", 10); }
+function setPos(p){ localStorage.setItem("gear_queue_pos", String(p)); }
+
+const nextBtn = document.getElementById("next-queue");
+const active = localStorage.getItem("gear_queue_active") === "1";
+const queue = getQueue();
+const here = "game.html?id=" + encodeURIComponent(id);
+
+if(active && queue && queue.includes(here)){
+  nextBtn.style.display = "block";
+
+  let pos = getPos();
+  const found = queue.indexOf(here);
+  if(found >= 0) pos = found;
+
+  const nextPos = pos + 1;
+
+  if(nextPos >= queue.length){
+    nextBtn.textContent = "КІНЕЦЬ ЧЕРГИ";
+    nextBtn.classList.add("end");
+
+    nextBtn.addEventListener("click", ()=>{
+      localStorage.setItem("gear_queue_active", "0");
+      location.href = "Index.html";
+    });
+  }else{
+    nextBtn.textContent = "ДАЛІ ➜";
+    nextBtn.classList.remove("end");
+
+    nextBtn.addEventListener("click", ()=>{
+      setPos(nextPos);
+      location.href = queue[nextPos];
+    });
+  }
+}else{
+  localStorage.setItem("gear_queue_active", "0");
+}
+
+function getLibrary(){
+  try{
+    return JSON.parse(sessionStorage.getItem("gear_library")) || [];
+  }catch(e){
+    return [];
+  }
+}
+
+function addToLibrary(id){
+  const lib = getLibrary();
+  if(!lib.includes(id)){
+    lib.push(id);
+    sessionStorage.setItem("gear_library", JSON.stringify(lib));
+  }
+}
+
+(function saveAllGames(){
+  if(!sessionStorage.getItem("gear_all_games")){
+    sessionStorage.setItem("gear_all_games", JSON.stringify(GAMES));
+  }
+})();
+
+</script>
+
+</body>
+</html>
